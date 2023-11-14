@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ticket_to: MyString
+  ticket_from: MyString
+  description: MyString
+  cbc_amount: 1
+  creator_id: 1
+  rank: 1
+  category_id: 1
+
+two:
+  ticket_to: MyString
+  ticket_from: MyString
+  description: MyString
+  cbc_amount: 1
+  creator_id: 1
+  rank: 1
+  category_id: 1
