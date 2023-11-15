@@ -1,52 +1,56 @@
-<%= form_with(model: ticket) do |form| %>
-  <% if ticket.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+<div class="ticket-container" >
+  <%= form_with(model: ticket, class: "ticket-form") do |form| %>
+    <% if ticket.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
 
-      <ul>
-        <% ticket.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% ticket.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+    <div>
+      <%= form.label :description, style: "display: block" %>
+      <%= form.text_field :description %>
+    </div>
+
+    <div>
+      <%= form.label :ticket_to, style: "display: block" %>
+      <%= form.text_field :ticket_to %>
+    </div>
+
+    <div>
+      <%= form.label :ticket_from, style: "display: block" %>
+      <%= form.text_field :ticket_from %>
+    </div>
+
+    <div>
+      <%= form.label :cbc_amount, style: "display: block" %>
+      <%= form.number_field :cbc_amount %>
+    </div>
+
+    <div>
+      <%= form.label :creator_id, style: "display: block" %>
+      <%= form.number_field :creator_id %>
+    </div>
+
+  <!--
+    <div>
+      <%= form.label :rank, style: "display: block" %>
+      <%= form.number_field :rank %>
+    </div>
+  -->
+    <div>
+      <%= form.label :category_id, style: "display: block" %>
+      <%= form.number_field :category_id %>
+    </div>
+
+    <div>
+      <%= form.submit %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :ticket_to, style: "display: block" %>
-    <%= form.text_field :ticket_to %>
-  </div>
-
-  <div>
-    <%= form.label :ticket_from, style: "display: block" %>
-    <%= form.text_field :ticket_from %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
-  </div>
-
-  <div>
-    <%= form.label :cbc_amount, style: "display: block" %>
-    <%= form.number_field :cbc_amount %>
-  </div>
-
-  <div>
-    <%= form.label :creator_id, style: "display: block" %>
-    <%= form.number_field :creator_id %>
-  </div>
-
-  <div>
-    <%= form.label :rank, style: "display: block" %>
-    <%= form.number_field :rank %>
-  </div>
-
-  <div>
-    <%= form.label :category_id, style: "display: block" %>
-    <%= form.number_field :category_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
