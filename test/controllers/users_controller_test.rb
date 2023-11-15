@@ -16,6 +16,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
+    #randtext == 8.times.map { (0...(rand(10))).map { ('a'..'z').to_a[rand(26)] }.join }.join(" ")
+    @users = User.all
+    for user in @users
+      user.destroy
+    end
     assert_difference("User.count") do
       post users_url, params: { user: { created_at: @user.created_at, display_name: @user.display_name, email: @user.email, password: @user.password, phone_number: @user.phone_number } }
     end

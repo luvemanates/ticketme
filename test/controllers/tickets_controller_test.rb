@@ -17,7 +17,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ticket" do
     assert_difference("Ticket.count") do
-      post tickets_url, params: { ticket: { category_id: @ticket.category_id, cbc_amount: @ticket.cbc_amount, creator_id: @ticket.creator_id, description: @ticket.description, rank: @ticket.rank, ticket_from: @ticket.ticket_from, ticket_to: @ticket.ticket_to } }
+      post tickets_url, params: { ticket: { category_id: @ticket.category_id, cbc_amount: @ticket.cbc_amount, creator_id: User.all.first.id, description: @ticket.description, rank: @ticket.rank, ticket_from: @ticket.ticket_from, ticket_to: @ticket.ticket_to } }
     end
 
     assert_redirected_to ticket_url(Ticket.last)
