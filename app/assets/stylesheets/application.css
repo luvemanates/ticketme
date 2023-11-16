@@ -27,14 +27,14 @@
 	display: block;
 	text-align: center;
 }
-.ticket-container {
+#new-ticket-container-sub {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
-	min-width: 300px;
+	min-width: 350px;
 	width: 60%;
-	max-width: 600px;
+	max-width: 800px;
 	outline: 1px solid black;
 	background-color: #e1e398;
 }
@@ -45,6 +45,8 @@ input {
 input label {
 }
 .new-ticket {
+	border: 1px solid black;
+	
 }
 .new-ticket label {
 	text-transform: uppercase;
@@ -52,10 +54,18 @@ input label {
 }
 .new-ticket input {
 	font-family: 'elegant-typewriter'; 
+	background-color: #e1e398;
+	border: 0;
+	outline: 0;
 }
 #ticket-description {
-	min-width: 300px;
-	width: 60%;
-	max-width: 600px;
-	outline: 1px solid black;
+	width: 100%;
 }
+#ticket-description textarea {
+	font-family: 'elegant-typewriter'; 
+	width: 95%;
+	height: 200px;
+	background-color: #e1e398;
+	border: 0;
+	outline: 0;
+}	

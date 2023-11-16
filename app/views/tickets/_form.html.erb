@@ -1,6 +1,5 @@
 <div id="new-ticket-container">
-  center
-  <div class="ticket-container" >
+  <div id="new-ticket-container-sub" >
     <%= form_with(model: ticket, class: "ticket-form") do |form| %>
       <% if ticket.errors.any? %>
         <div style="color: red">
@@ -17,7 +16,7 @@
 
       <div id="ticket-description" class="new-ticket">
         <%= form.label :description, style: "display: block" %>
-        <%= form.text_field :description %>
+        <%= form.text_area :description %>
       </div>
 
       <div class="new-ticket">
