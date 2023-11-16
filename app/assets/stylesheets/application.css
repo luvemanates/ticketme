@@ -24,25 +24,25 @@
     	src: url('elegant-typewriter.regular.ttf');
 }
 .ticket-container {
-    /*font-family: rm_typerighter;  */
-    /*font-family: 'Mukta', sans-serif; */
-	font-family: 'elegant-typewriter'; 
 }
 .ticket-form {
-/*	font-family: rm_typerighter;  */
-    /*font-family: 'Mukta', sans-serif;*/
-    	font-family: 'Mukta', sans-serif;
 	background-color: #e1e398;
 }
-.ticket-form input#ticket_description {
-}
 input {
-/*	font-family: rm_typerighter; */ 
-    /*font-family: 'Mukta', sans-serif;*/
-    font-family: 'elegant-typewriter'; 
-	outline: 1px solid red;
 }
 input label {
-/*	font-family: rm_typerighter; */ 
-    font-family: 'Mukta', sans-serif;
+}
+.new-ticket {
+}
+.new-ticket label {
+    	font-family: 'Mukta', sans-serif;
+}
+.new-ticket input {
+	font-family: 'elegant-typewriter'; 
+}
+#ticket-description {
+	min-width: 300px;
+	width: 60%;
+	max-width: 600px;
+	outline: 1px solid black;
 }
