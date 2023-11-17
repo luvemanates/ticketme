@@ -15,6 +15,20 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should create ticket with anonymous user" do
+    assert_difference("Ticket.count") do
+      post tickets_url, params: { ticket: { category_id: @ticket.category_id, 
+                                            cbc_amount: @ticket.cbc_amount, 
+                                            creator_id: '', 
+                                            description: 'anonymous user needs to build a pool 45', 
+                                            rank: @ticket.rank, 
+                                            ticket_from: "Franky Gehesrt", 
+                                            ticket_to: "Anonymous user"} }
+    end
+    assert Ticket.where({ :description => 'anonymous user needs to build a pool 45' 
+                        }).first.creator == User.where({:email => "anonymous@ticketme.com"}).first 
+  end
+
   test "should create ticket" do
     assert_difference("Ticket.count") do
       post tickets_url, params: { ticket: { category_id: @ticket.category_id, cbc_amount: @ticket.cbc_amount, creator_id: User.all.first.id, description: @ticket.description, rank: @ticket.rank, ticket_from: @ticket.ticket_from, ticket_to: @ticket.ticket_to } }

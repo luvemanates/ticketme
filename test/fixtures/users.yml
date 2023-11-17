@@ -11,3 +11,9 @@ two:
   password: MyString
   display_name: MyString
   phone_number: MyString
+
+three:
+  email: "anonymous@ticketme.com"
+  password: stuff
+  display_name: Anonymous
+  phone_number: 4443348943

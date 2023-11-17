@@ -22,10 +22,10 @@ class TicketsController < ApplicationController
   # POST /tickets or /tickets.json
   def create
     @ticket = Ticket.new(ticket_params)
-    #creator = @ticket.creator
-    #unless creator.is_a? User
-    #  @ticket.creator = 
-    #end
+    creator = @ticket.creator
+    unless creator.is_a? User
+      @ticket.creator = User.find_by_email('anonymous@ticketme.com')
+    end
     respond_to do |format|
       if @ticket.save
         @ticket.users << @ticket.creator
