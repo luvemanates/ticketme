@@ -12,7 +12,9 @@ class UserTest < ActiveSupport::TestCase
     assert user.save
   end
 
-  test "user can make a ticker and be added as creator" do
+  test "user can make a ticker, 
+        and be added as creator,
+        and ticket includes the user" do
     user = User.new(:email => "test@test.com", 
                     :password => "Whatever", 
                     :display_name => "Dude cool", 
@@ -25,5 +27,6 @@ class UserTest < ActiveSupport::TestCase
     assert ticket.save
     assert user.tickets << ticket
     assert user.created_tickets.include?(ticket)
+    assert ticket.creator == user
   end
 end
