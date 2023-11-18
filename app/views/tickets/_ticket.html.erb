@@ -1,45 +1,51 @@
 <div id="show-ticket-container">
   <table id="<%= dom_id ticket %>" class="show-ticket">
-    <tr>
-      <td colspan="2" class="ticket-to">
-        <strong>Ticket to:</strong><br/>
-        <%= ticket.ticket_to %>
-      </td>
-      <td class="ticket-from">
-        <strong>Ticket from:</strong><br/>
-        <%= ticket.ticket_from %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="1" class="ticket-description">
-        <strong>Description:</strong><br/>
-        <%= ticket.description %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Cbc amount:</strong><br/>
-        <%= ticket.cbc_amount %>
-      </td>
-      <td class="empty">
-      </td>
-    <tr>
-      <td>
-        <strong>Creator:</strong><br/>
-        <%= ticket.creator.display_name %>
-      </td>
-      <td class="empty">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Rank:</strong><br/>
-        <%= ticket.rank %>
-      </td>
-      <td>
-        <strong>Category:</strong><br/>
-        <%= ticket.category_id %>
-      </td>
-    </tr>
+    <thead>
+      <th colspan="2"></th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2" class="ticket-to">
+          <strong>Ticket to:</strong><br/>
+          <%= ticket.ticket_to %>
+        </td>
+        <td class="ticket-from" colspan="2">
+          <strong>Ticket from:</strong><br/>
+          <%= ticket.ticket_from %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="1" class="ticket-description">
+          <strong>Description:</strong><br/>
+          <%= ticket.description %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <strong>Cbc amount:</strong><br/>
+          <%= ticket.cbc_amount %>
+        </td>
+        <td class="empty">
+        </td>
+      <tr>
+        <td colspan="2">
+          <strong>Creator:</strong><br/>
+          <%= ticket.creator.display_name %>
+        </td>
+        <td class="empty">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <strong>Rank:</strong><br/>
+          <%= ticket.rank %>
+        </td>
+        <td>
+          <strong>Category:</strong><br/>
+          <%= ticket.category_id %>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>

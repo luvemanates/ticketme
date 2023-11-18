@@ -32,10 +32,13 @@
 	min-width: 300px;
 	width: 80%;
 	max-width: 800px;
+}
+#show-ticket-container  {
 	background-color: #e1e398;
 }
 table.show-ticket {
 	border-collapse: collapse;
+	width: 100%;
 }
 #show-ticket-container table tr td {
 	outline: 1px solid gray;
@@ -51,23 +54,21 @@ table.show-ticket {
 	font-size: 12pt;
 	font-weight: normal;
 }
+#show-ticket-container table tr td.ticket-description {
+}
 table tr td.ticket-description {
 }
-table tr .ticket-description {
-	width: 100%;
-}
-table tr td.ticket-to {
-	height: 100%;
+#show-ticket-container table tr td.ticket-to {
 	width: 50%;
 }
-table tr td.ticket-from {
-	height: 100%;
+#show-ticket-container table tr td.ticket-from {
 	width: 50%;
 }
 table tr td.empty {
 	background-color: lightgray;
 }
 
+/* FORM 
 #new-ticket-container {
 	display: block;
 	text-align: center;
@@ -113,3 +114,4 @@ input label {
 	border: 0;
 	outline: 0;
 }	
+*/
