@@ -1,39 +1,43 @@
 <div id="show-ticket-container">
   <table id="<%= dom_id ticket %>" class="show-ticket">
     <tr>
-      <td class="ticket-description">
-        <strong>Description:</strong>
-        <%= ticket.description %>
-      <td>
-    </tr>
-    <tr>
-      <td class="ticket-to">
-        <strong>Ticket to:</strong>
+      <td colspan="2" class="ticket-to">
+        <strong>Ticket to:</strong><br/>
         <%= ticket.ticket_to %>
       </td>
-      <td>
-        <strong>Ticket from:</strong>
+      <td class="ticket-from">
+        <strong>Ticket from:</strong><br/>
         <%= ticket.ticket_from %>
       </td>
     </tr>
     <tr>
-      <td>
-        <strong>Cbc amount:</strong>
-        <%= ticket.cbc_amount %>
-      </td>
-    <tr>
-      <td>
-        <strong>Creator:</strong>
-        <%= ticket.creator.display_name %>
+      <td colspan="1" class="ticket-description">
+        <strong>Description:</strong><br/>
+        <%= ticket.description %>
       </td>
     </tr>
     <tr>
       <td>
-        <strong>Rank:</strong>
+        <strong>Cbc amount:</strong><br/>
+        <%= ticket.cbc_amount %>
+      </td>
+      <td class="empty">
+      </td>
+    <tr>
+      <td>
+        <strong>Creator:</strong><br/>
+        <%= ticket.creator.display_name %>
+      </td>
+      <td class="empty">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Rank:</strong><br/>
         <%= ticket.rank %>
       </td>
       <td>
-        <strong>Category:</strong>
+        <strong>Category:</strong><br/>
         <%= ticket.category_id %>
       </td>
     </tr>
