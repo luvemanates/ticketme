@@ -23,6 +23,10 @@
     	font-family: 'elegant-typewriter'; 
     	src: url('elegant-typewriter.regular.ttf');
 }
+
+
+
+
 #new-ticket-container {
 	display: block;
 	text-align: center;

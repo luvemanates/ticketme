@@ -1,37 +1,41 @@
-<div id="<%= dom_id ticket %>">
-  <p>
-    <strong>Ticket to:</strong>
-    <%= ticket.ticket_to %>
-  </p>
-
-  <p>
-    <strong>Ticket from:</strong>
-    <%= ticket.ticket_from %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= ticket.description %>
-  </p>
-
-  <p>
-    <strong>Cbc amount:</strong>
-    <%= ticket.cbc_amount %>
-  </p>
-
-  <p>
-    <strong>Creator:</strong>
-    <%= ticket.creator_id %>
-  </p>
-
-  <p>
-    <strong>Rank:</strong>
-    <%= ticket.rank %>
-  </p>
-
-  <p>
-    <strong>Category:</strong>
-    <%= ticket.category_id %>
-  </p>
-
+<div id="show-ticket-container">
+  <table id="<%= dom_id ticket %>" class="show-ticket">
+    <tr>
+      <td>
+        <strong>Description:</strong>
+        <%= ticket.description %>
+      <td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Ticket to:</strong>
+        <%= ticket.ticket_to %>
+      </td>
+      <td>
+        <strong>Ticket from:</strong>
+        <%= ticket.ticket_from %>
+      </td>
+    </tr>
+    <tr>>
+      <td>
+        <strong>Cbc amount:</strong>
+        <%= ticket.cbc_amount %>
+      </td>
+    <tr>
+      <td>
+        <strong>Creator:</strong>
+        <%= ticket.creator.display_name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Rank:</strong>
+        <%= ticket.rank %>
+      </td>
+      <td>
+        <strong>Category:</strong>
+        <%= ticket.category_id %>
+      </td>
+    </tr>
+  </table>
 </div>
