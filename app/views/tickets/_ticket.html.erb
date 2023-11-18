@@ -1,13 +1,13 @@
 <div id="show-ticket-container">
   <table id="<%= dom_id ticket %>" class="show-ticket">
     <tr>
-      <td>
+      <td class="ticket-description">
         <strong>Description:</strong>
         <%= ticket.description %>
       <td>
     </tr>
     <tr>
-      <td>
+      <td class="ticket-to">
         <strong>Ticket to:</strong>
         <%= ticket.ticket_to %>
       </td>
@@ -16,7 +16,7 @@
         <%= ticket.ticket_from %>
       </td>
     </tr>
-    <tr>>
+    <tr>
       <td>
         <strong>Cbc amount:</strong>
         <%= ticket.cbc_amount %>

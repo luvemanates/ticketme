@@ -24,7 +24,43 @@
     	src: url('elegant-typewriter.regular.ttf');
 }
 
-
+body {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	min-width: 300px;
+	width: 80%;
+	max-width: 1200px;
+	background-color: #e1e398;
+}
+table.show-ticket {
+}
+#show-ticket-container table tr td {
+	outline: 1px solid black;
+}
+#show-ticket-container table tr td {
+	font-family: 'elegant-typewriter'; 
+}
+#show-ticket-container table tr td strong {
+	text-transform: uppercase;
+    	font-family: 'Mukta', sans-serif;
+}
+table tr .ticket-description {
+	width: 100%;
+}
+table tr td.ticket-description {
+	width: 100%;
+}
+table tr .ticket-description {
+	width: 50%;
+}
+table tr td.ticket-to {
+	width: 50%;
+}
+table tr td.ticket-from {
+	width: 50%;
+}
 
 
 #new-ticket-container {
