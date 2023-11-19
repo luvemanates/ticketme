@@ -33,35 +33,35 @@
 	width: 80%;
 	max-width: 800px;
 }
-#show-ticket-container  {
+.show-ticket-container  {
 	background-color: #e1e398;
 }
 table.show-ticket {
 	border-collapse: collapse;
 	width: 100%;
 }
-#show-ticket-container table tr td {
+.show-ticket-container table tr td {
 	outline: 1px solid gray;
 	vertical-align: top;
 }
-#show-ticket-container table tr td {
+.show-ticket-container table tr td {
 	font-size: 14pt;
 	font-family: 'elegant-typewriter'; 
 }
-#show-ticket-container table tr td strong {
+.show-ticket-container table tr td strong {
 	text-transform: uppercase;
     	font-family: 'Mukta', sans-serif;
 	font-size: 12pt;
 	font-weight: normal;
 }
-#show-ticket-container table tr td.ticket-description {
+.show-ticket-container table tr td.ticket-description {
 }
 table tr td.ticket-description {
 }
-#show-ticket-container table tr td.ticket-to {
+.show-ticket-container table tr td.ticket-to {
 	width: 50%;
 }
-#show-ticket-container table tr td.ticket-from {
+.show-ticket-container table tr td.ticket-from {
 	width: 50%;
 }
 table tr td.empty {
@@ -72,7 +72,7 @@ table tr td.empty {
 	background-color: #e1e398;
 	width: 100%;
 }
-table .new-ticket-table {
+table.new-ticket-table {
 	border-collapse: collapse;
 	width: 100%;
 }
@@ -90,6 +90,7 @@ table.new-ticket-table tr td{
 	background-color: transparent;
 	border: 0;
 	outline: 0;
+	width: 100%;
 }
 #ticket-description textarea {
 	font-size: 14pt;
@@ -97,41 +98,7 @@ table.new-ticket-table tr td{
 	background-color: transparent;
 	outline: 0;
 	border: 0;
-}
-/* FORM 
-#new-ticket-container {
-	display: block;
-	text-align: center;
-}
-#new-ticket-container-sub {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: left;
-	min-width: 350px;
-	width: 60%;
-	max-width: 800px;
-	outline: 1px solid black;
-	background-color: #e1e398;
-}
-.ticket-form {
-}
-input {
-}
-input label {
-}
-.new-ticket {
-	border: 1px solid black;
-	
-}
-#ticket-description {
 	width: 100%;
 }
-#ticket-description textarea {
-	font-family: 'elegant-typewriter'; 
-	width: 95%;
-	background-color: #e1e398;
-	border: 0;
-	outline: 0;
-}	
+/* FORM 
 */
