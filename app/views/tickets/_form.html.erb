@@ -13,43 +13,72 @@
         </div>
       <% end %>
 
+      <table class="new-ticket-table">
+        <thead>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="1">
+              <div class="new-ticket">
+                <%= form.label :ticket_to, style: "display: block" %>
+                <%= form.text_field :ticket_to %>
+              </div>
+            </td>
+            <td colspan="1">
+              <div class="new-ticket">
+                <%= form.label :ticket_from, style: "display: block" %>
+                <%= form.text_field :ticket_from %>
+              </div>
+            </td>
+          <tr>
+            <td colspan="2">
+              <div id="ticket-description" class="new-ticket">
+                <%= form.label :description, style: "display: block" %>
+                <%= form.text_area :description %>
+              </div>
+            </td>
+          </tr>
 
-      <div id="ticket-description" class="new-ticket">
-        <%= form.label :description, style: "display: block" %>
-        <%= form.text_area :description %>
-      </div>
 
-      <div class="new-ticket">
-        <%= form.label :ticket_to, style: "display: block" %>
-        <%= form.text_field :ticket_to %>
-      </div>
+          <tr>
+            <td>
+              <div class="new-ticket">
+                <%= form.label :cbc_amount, "Charity based currency amount:", style: "display: block" %>
+                <%= form.number_field :cbc_amount %>
+              </div>
+            </td>
+            <td class="empty">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="new-ticket">
+                <%= form.label :creator_id, style: "display: block" %>
+                <%= form.number_field :creator_id %>
+              </div>
+            </td>
+            <td class="empty">
+            </td>
+          </tr>
 
-      <div class="new-ticket">
-        <%= form.label :ticket_from, style: "display: block" %>
-        <%= form.text_field :ticket_from %>
-      </div>
+        <!--
+          <div>
+            <%= form.label :rank, style: "display: block" %>
+            <%= form.number_field :rank %>
+          </div>
+        <tr>
+          <td colspan="1">
+            <div class="new-ticket">
+              <%= form.label :category_id, style: "display: block" %>
+              <%= form.number_field :category_id %>
+            </div>
+          </td>
+        </tr>
+        -->
 
-      <div class="new-ticket">
-        <%= form.label :cbc_amount, style: "display: block" %>
-        <%= form.number_field :cbc_amount %>
-      </div>
-
-      <div class="new-ticket">
-        <%= form.label :creator_id, style: "display: block" %>
-        <%= form.number_field :creator_id %>
-      </div>
-
-    <!--
-      <div>
-        <%= form.label :rank, style: "display: block" %>
-        <%= form.number_field :rank %>
-      </div>
-    -->
-      <div class="new-ticket">
-        <%= form.label :category_id, style: "display: block" %>
-        <%= form.number_field :category_id %>
-      </div>
-
+        </tbody>
       <div>
         <%= form.submit %>
       </div>

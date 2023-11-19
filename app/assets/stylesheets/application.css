@@ -68,6 +68,36 @@ table tr td.empty {
 	background-color: lightgray;
 }
 
+#new-ticket-container {
+	background-color: #e1e398;
+	width: 100%;
+}
+table .new-ticket-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+table.new-ticket-table tr td{
+	outline: 1px solid gray;
+}
+.new-ticket label {
+	text-transform: uppercase;
+    	font-family: 'Mukta', sans-serif;
+	font-size: 12pt;
+}
+.new-ticket input {
+	font-size: 14pt;
+	font-family: 'elegant-typewriter'; 
+	background-color: transparent;
+	border: 0;
+	outline: 0;
+}
+#ticket-description textarea {
+	font-size: 14pt;
+	font-family: 'elegant-typewriter'; 
+	background-color: transparent;
+	outline: 0;
+	border: 0;
+}
 /* FORM 
 #new-ticket-container {
 	display: block;
@@ -93,16 +123,6 @@ input label {
 .new-ticket {
 	border: 1px solid black;
 	
-}
-.new-ticket label {
-	text-transform: uppercase;
-    	font-family: 'Mukta', sans-serif;
-}
-.new-ticket input {
-	font-family: 'elegant-typewriter'; 
-	background-color: #e1e398;
-	border: 0;
-	outline: 0;
 }
 #ticket-description {
 	width: 100%;
