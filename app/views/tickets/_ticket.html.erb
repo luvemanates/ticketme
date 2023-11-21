@@ -1,51 +1,53 @@
-<div class="show-ticket-container">
-  <table id="<%= dom_id ticket %>" class="show-ticket">
-    <thead>
-      <th colspan="2"></th>
-      <th></th>
-    </thead>
-    <tbody>
-      <tr>
-        <td colspan="1" class="ticket-to">
-          <strong>Ticket to:</strong><br/>
-          <%= ticket.ticket_to %>
-        </td>
-        <td class="ticket-from" colspan="1">
-          <strong>Ticket from:</strong><br/>
-          <%= ticket.ticket_from %>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2" class="ticket-description">
-          <strong>Description:</strong><br/>
-          <%= ticket.description %>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="1">
-          <strong>Cbc amount:</strong><br/>
-          <%= ticket.cbc_amount %>
-        </td>
-        <td colspan"1" class="empty">
-        </td>
-      <tr>
-        <td colspan="1">
-          <strong>Creator:</strong><br/>
-          <%= ticket.creator.display_name %>
-        </td>
-        <td colspan="1" class="empty">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="1">
-          <strong>Rank:</strong><br/>
-          <%= ticket.rank %>
-        </td>
-        <td colspan="1">
-          <strong>Category:</strong><br/>
-          <%= ticket.category_id %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<a href="<%= ticket_path(ticket) %>" class="table-show-ticket">
+  <div class="show-ticket-container">
+    <table id="<%= dom_id ticket %>" class="show-ticket">
+      <thead>
+        <th colspan="2"></th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="1" class="ticket-to">
+            <strong>Ticket to:</strong><br/>
+            <%= ticket.ticket_to %>
+          </td>
+          <td class="ticket-from" colspan="1">
+            <strong>Ticket from:</strong><br/>
+            <%= ticket.ticket_from %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="ticket-description">
+            <strong>Description:</strong><br/>
+            <%= ticket.description %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <strong>Cbc amount:</strong><br/>
+            <%= number_to_currency(ticket.cbc_amount) %>
+          </td>
+          <td colspan"1" class="empty">
+          </td>
+        <tr>
+          <td colspan="1">
+            <strong>Creator:</strong><br/>
+            <%= ticket.creator.display_name %>
+          </td>
+          <td colspan="1" class="empty">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <strong>Rank:</strong><br/>
+            <%= ticket.rank %>
+          </td>
+          <td colspan="1">
+            <strong>Category:</strong><br/>
+            <%= ticket.category_id %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</a>

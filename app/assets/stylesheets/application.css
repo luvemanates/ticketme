@@ -154,3 +154,35 @@ table.new-ticket-table tr td{
 }
 /* FORM 
 */
+.table-show-ticket {
+}
+a.table-show-ticket:link {
+	text-decoration: none;
+	color:black;
+}
+a.table-show-ticket:visited {
+	text-decoration: none;
+	color:black;
+}
+button.delete-ticket {
+	outline: 1px solid lightgray;
+	background-color: white;
+	color: black;
+	border: 0;
+    	font-family: 'Mukta', sans-serif;
+	font-size: 12pt;
+	margin-left: 80%;
+}
+.ticket-seperator {
+	height: 50px;
+	width: auto;
+}
+input#create-ticket-button {
+	outline: 1px solid lightgray;
+	background-color: white;
+	color: black;
+	border: 0;
+    	font-family: 'Mukta', sans-serif;
+	font-size: 12pt;
+	/*margin-left: 80%; */
+}

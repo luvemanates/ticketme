@@ -6,5 +6,5 @@
   <%= link_to "Edit this ticket", edit_ticket_path(@ticket) %> |
   <%= link_to "Back to tickets", tickets_path %>
 
-  <%= button_to "Destroy this ticket", @ticket, method: :delete %>
+  <%= button_to "Destroy this ticket", @ticket, method: :delete, :class => "delete-ticket" %>
 </div>
