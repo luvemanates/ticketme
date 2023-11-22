@@ -1,5 +1,9 @@
+the current ticket number is <%= current_ticket_count %>
+<% color_selector = current_ticket_count % 4 %>
+<% ticket_colors = ["blue", "red", "green", "yellow"] %>
+<% ticket_color = ticket_colors[color_selector] %> 
 <a href="<%= ticket_path(ticket) %>" class="table-show-ticket">
-  <div class="show-ticket-container">
+  <div class="show-ticket-container <%= ticket_color %>">
     <table id="<%= dom_id ticket %>" class="show-ticket">
       <thead>
         <th colspan="2"></th>

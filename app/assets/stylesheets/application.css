@@ -88,12 +88,24 @@ a#ticket-devil-logo-link:active {
 .show-ticket-container  {
 	background-color: #faf7b2;
 }
+.show-ticket-container.yellow  {
+	background-color: #faf7b2;
+}
+.show-ticket-container.red  {
+	background-color: #fab2b2;
+}
+.show-ticket-container.blue  {
+	background-color: #b2e8fa;
+}
+.show-ticket-container.green  {
+	background-color: #b2fab5;
+}
 table.show-ticket {
 	border-collapse: collapse;
 	width: 100%;
 }
 .show-ticket-container table tr td {
-	outline: 1px solid lightgray;
+	outline: 1px solid gray;
 	vertical-align: top;
 }
 .show-ticket-container table tr td {
@@ -129,7 +141,7 @@ table.new-ticket-table {
 	width: 100%;
 }
 table.new-ticket-table tr td{
-	outline: 1px solid lightgray;
+	outline: 1px solid gray;
 }
 .new-ticket label {
 	text-transform: uppercase;
