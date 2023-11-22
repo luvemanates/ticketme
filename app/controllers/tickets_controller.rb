@@ -15,6 +15,15 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new
   end
 
+  # GET /tickets/1/bcc
+  def bcc
+    @ticket = Ticket.find(params[:ticket_id])
+    #puts @ticket.to_yaml
+    #puts "bcc method"
+    flash[:notice] = "Blind carbon copied this ticket.  It will now show up as one of your watched tickets."
+    redirect_to ticket_path(@ticket)
+  end
+  
   # GET /tickets/1/edit
   def edit
   end

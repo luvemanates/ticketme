@@ -8,6 +8,7 @@
     <p style="text-align: right;">
       <%= link_to "Show this ticket", ticket %>
     </p>
+    <%= button_to "BCC: this ticket", ticket_bcc_path(ticket), method: :put, :class => "bcc-ticket" %>
     <div class="ticket-seperator">
       &nbsp;
     </div>
