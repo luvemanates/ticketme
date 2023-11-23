@@ -3,18 +3,18 @@
 one:
   id: 1
   email: "one@one.com"
-  password: MyString
-  display_name: MyString
+  encrypted_password: 2a$04$yl3CMqLSOubprtsHAkO7xO.G3UhDu.3E487P4TxL8q7.Ygcw/WHfq
+  display_name: Oney
   phone_number: MyString
 
 two:
   email: "two@two.com"
-  password: MyString
+  encrypted_password: 2a$04$yl3CMqLSOubprtsHAkO7xO.G3UhDu.3E487P4TxL8q7.Ygcw/WHfq
   display_name: MyString
   phone_number: MyString
 
 three:
   email: "anonymous@ticketme.com"
-  password: stuff
+  encrypted_password: 2a$04$yl3CMqLSOubprtsHAkO7xO.G3UhDu.3E487P4TxL8q7.Ygcw/WHfq
   display_name: Anonymous
   phone_number: 4443348943

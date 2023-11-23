@@ -7,6 +7,7 @@ class UserTest < ActiveSupport::TestCase
   test "create a user" do
     user = User.new(:email => "test@test.com", 
                     :password => "Whatever", 
+                    :password_confirmation => "Whatever", 
                     :display_name => "Dude cool", 
                     :phone_number => "5624567894") 
     assert user.save
@@ -17,6 +18,7 @@ class UserTest < ActiveSupport::TestCase
         and ticket includes the user" do
     user = User.new(:email => "test@test.com", 
                     :password => "Whatever", 
+                    :password_confirmation => "Whatever", 
                     :display_name => "Dude cool", 
                     :phone_number => "5624567894") 
     assert user.save

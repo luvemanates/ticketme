@@ -7,3 +7,5 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+user = User.new(:email => 'anonymous@ticketme.com', :password => 'deftones', :password_confirmation => 'deftones')
+user.save
