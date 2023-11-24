@@ -17,6 +17,10 @@
   <% end %>
 </div>
 
-<%= link_to "Log in", new_user_session_path %>
-<%= button_to "Log Out", destroy_user_session_path, :method => 'delete' %>
+<% if user_signed_in? %>
+  <%= button_to "Log Out", destroy_user_session_path, :method => 'delete' %>
+<% else %>
+  <%= link_to "Log in", new_user_session_path %>
+<% end %>
+<br/>
 <%= link_to "New ticket", new_ticket_path %>

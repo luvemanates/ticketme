@@ -1,5 +1,5 @@
 namespace :ticketme do
-  desc "TODO"
+  desc "Update the rank number for all tickets"
   task calc_rank: :environment do
     tickets = Ticket.all
     for ticket in tickets 

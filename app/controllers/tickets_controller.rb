@@ -13,6 +13,11 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
+    if user_signed_in?
+      @ticket.creator = current_user 
+    else
+      @ticket.creator = User.where(:email => 'anonymous@ticketme.com').first
+    end
   end
 
   # PUT /tickets/1/bcc
@@ -20,9 +25,14 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(params[:ticket_id])
     #increase the rank
     if user_signed_in?
-      current_user.tickets << @ticket 
-      @ticket.rank = @ticket.rank + 1
-      flash[:notice] = "Blind carbon copied this ticket.  It will now show up as one of your watched tickets."
+      if current_user.tickets.include? @ticket
+        flash[:notice] = "You are already watching this ticket."
+      else
+        current_user.tickets << @ticket 
+        @ticket.rank = @ticket.rank + 1
+        @ticket.save
+        flash[:notice] = "Blind carbon copied this ticket.  It will now show up as one of your watched tickets."
+      end
     else
       flash[:notice] = "You must be signed in to BCC a ticket."
     end
