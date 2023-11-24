@@ -15,15 +15,19 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new
   end
 
-  # GET /tickets/1/bcc
+  # PUT /tickets/1/bcc
   def bcc
     @ticket = Ticket.find(params[:ticket_id])
     #increase the rank
-    #current_user.tickets << @ticket
-    #@ticket.rank = @ticket.rank + 1
+    if user_signed_in?
+      current_user.tickets << @ticket 
+      @ticket.rank = @ticket.rank + 1
+      flash[:notice] = "Blind carbon copied this ticket.  It will now show up as one of your watched tickets."
+    else
+      flash[:notice] = "You must be signed in to BCC a ticket."
+    end
     #puts @ticket.to_yaml
     #puts "bcc method"
-    flash[:notice] = "Blind carbon copied this ticket.  It will now show up as one of your watched tickets."
     redirect_to ticket_path(@ticket)
   end
   
@@ -34,7 +38,7 @@ class TicketsController < ApplicationController
   # POST /tickets or /tickets.json
   def create
     @ticket = Ticket.new(ticket_params)
-    creator = @ticket.creator
+    creator = current_user #@ticket.creator
     unless creator.is_a? User
       @ticket.creator = User.find_by_email('anonymous@ticketme.com')
     end

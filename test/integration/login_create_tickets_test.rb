@@ -15,6 +15,18 @@ class LoginCreateTicketsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "bcc a ticket" do
+    u = User.create({:email => 'user@user.com', :password => 'deftones', :password_confirmation => 'deftones' })
+    get new_user_registration_path
+    assert_response :success
+    post user_session_path, :params => { :user => { :email => 'user@user.com', :password => 'deftones' } }
+    assert_redirected_to root_path
+    ticket = Ticket.first
+    assert_not u.tickets.include? ticket 
+    put ticket_bcc_path(ticket)
+    assert u.tickets.include? ticket 
+  end
+
   test "create user behind scenes and then create ticket after login" do
     u = User.create({:email => 'user@user.com', :password => 'deftones', :password_confirmation => 'deftones' })
     get new_user_registration_path
@@ -31,5 +43,6 @@ class LoginCreateTicketsTest < ActionDispatch::IntegrationTest
                                             ticket_from: "Franky Gehesrt", 
                                             ticket_to: "Anonymous user"} }
     end
+    assert u.tickets.include? Ticket.last
   end
 end
