@@ -68,3 +68,4 @@ end
 
 gem "mysql2"
 gem "devise"
+gem "will_paginate"

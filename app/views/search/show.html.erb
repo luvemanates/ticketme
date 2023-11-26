@@ -1,8 +1,13 @@
 This is the search page.
 
 
-<%= form_with do |form| %>
+<%= form_with :url => {:action => 'create', :controller => 'search'} do |form| %>
   <%= form.label :search_params, style: "display: block" %>
-  <%= form.text_field :search_params %>
+  <%= form.text_field :posted_search_params, :value => @search_params %>
+  <%= form.text_field :posted_page, :value => @page %>
+  <%= form.submit 'Search' %>
 <% end %>
 
+<% for ticket in @tickets %>
+  <%= render 'tickets/ticket', :ticket => ticket %>
+<% end %>
