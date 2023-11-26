@@ -29,25 +29,26 @@
 	src: url('bucchery.personal-used.otf');
 }
 
-#body-container {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: left;
-	min-width: 300px;
-	width: 80%;
-	max-width: 800px;
+#menu {
+  display: inline-block;
+  width: 100%;
+}
+#menu-new-ticket-link {
+}
+#menu-search-link {
+}
+#menu-login {
 }
 #body-container h1 {
 	font-family: 'Mukta';
 	font-size: 14pt;
 }
 a#ticket-devil-logo-link {
-	color: black;
+	color: white;
 	text-decoration: none;
 }
 a#ticket-devil-logo-link:link {
-	color: black;
+	color: white;
 	text-decoration: none;
 }
 a#ticket-devil-logo-link:hover {
@@ -56,11 +57,11 @@ a#ticket-devil-logo-link:hover {
 }
 a#ticket-devil-logo-link:visited {
 	text-decoration: none;
-	color: black;
+	color: white;
 }
 a#ticket-devil-logo-link:active {
 	text-decoration: none;
-	color: black;
+	color: white;
 }
 #ticket-devil-logo {
 	top: 0px;
@@ -71,6 +72,8 @@ a#ticket-devil-logo-link:active {
 	border: 0;
 	outline: 0;
 	margin: 0;
+	background-color: black;
+	color: white
 }
 #ticket-devil-tail {
 	/*background-image: 'devil_tail.png';
@@ -79,12 +82,20 @@ a#ticket-devil-logo-link:active {
 	*/
 	top: 0px;
 	left: 0px;
-	margin-left: 130px;
 	margin-top: -20px;
 }
 #ticket-devil-tail img {
 	height: 5%;
 	width: 5%;
+}
+#body-container {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	min-width: 300px;
+	width: 80%;
+	max-width: 800px;
 }
 .show-ticket-container  {
 	background-color: #faf7b2;

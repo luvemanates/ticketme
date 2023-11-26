@@ -11,14 +11,34 @@
   </head>
 
   <body>
-    <a id="ticket-devil-logo-link" href="<%= root_path %>">
-      <div id="ticket-devil-logo">
-        Ticketdevil
+    <div id="menu">
+      <a id="ticket-devil-logo-link" href="<%= root_path %>">
+        <div id="ticket-devil-logo">
+          Ticketdevil
+        </div>
+        <div id="ticket-devil-tail">
+          <img src="/devil_tail_rt.png" width="188" height="195" />
+        </div>
+      </a>
+      
+      <div id="menu-new-ticket-link">
+        <%= link_to "New ticket", new_ticket_path %>
       </div>
-    </a>
-    <div id="ticket-devil-tail">
-      <img src="/devil_tail.png" width="188" height="195" />
-    </div>
+
+      <div id="menu-search-link">
+        <%= link_to "Search", { :action => 'show', :controller => '/search', :search_params => 'anonymous', :page => 1} %>
+      </div>
+
+      <div id="menu-login">
+        <% if user_signed_in? %>
+          <%= button_to "Log Out", destroy_user_session_path, :method => 'delete' %>
+        <% else %>
+          <%= link_to "Log in", new_user_session_path %>
+        <% end %>
+      </div>
+
+    </div> <!-- end menu id div -->
+
     <div id="body-container">
       <%= yield %>
     </div>
