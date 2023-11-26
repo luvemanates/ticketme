@@ -25,3 +25,5 @@
 <br/>
 <%= link_to "New ticket", new_ticket_path %>
 <%= link_to "search", { :action => 'show', :controller => 'search', :search_params => 'blah', :page => 1} %>
+
+<%= will_paginate @tickets %>

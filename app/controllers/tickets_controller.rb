@@ -3,7 +3,12 @@ class TicketsController < ApplicationController
 
   # GET /tickets or /tickets.json
   def index
-    @tickets = Ticket.all.order(:created_at => :desc)
+    unless params[:page]
+      @page = 1 
+    else
+      @page = params[:page]
+    end
+    @tickets = Ticket.all.order(:created_at => :desc).paginate(:page => @page)
   end
 
   # GET /tickets/1 or /tickets/1.json

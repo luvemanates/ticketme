@@ -8,6 +8,9 @@ This is the search page.
   <%= form.submit 'Search' %>
 <% end %>
 
+<% i = 1 %>
 <% for ticket in @tickets %>
-  <%= render 'tickets/ticket', :ticket => ticket %>
+  <%= render 'tickets/ticket', :ticket => ticket, :current_ticket_count => i %>
+  <% i = i + 1 %>
 <% end %>
+<%= will_paginate @tickets %>
