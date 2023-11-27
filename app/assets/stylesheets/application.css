@@ -30,18 +30,30 @@
 }
 
 #menu {
-  display: inline-block;
+  display: flex;
   width: 100%;
 }
 #menu-new-ticket-link {
+	padding-top: 20px;
+	padding-left: 100px;
+	width: 70px;
+	height: auto;
 }
 #menu-search-link {
+	padding-top: 20px;
+	padding-left: 100px;
+	width: 50px;
+	height: auto;
 }
 #menu-login {
+	padding-top: 20px;
+	padding-left: 100px;
+	width: 50px;
+	height: auto;
 }
-#body-container h1 {
-	font-family: 'Mukta';
-	font-size: 14pt;
+#menu a {
+	color:black;
+	text-decoration: none;
 }
 a#ticket-devil-logo-link {
 	color: white;
@@ -73,7 +85,8 @@ a#ticket-devil-logo-link:active {
 	outline: 0;
 	margin: 0;
 	background-color: black;
-	color: white
+	color: white;
+	padding: 10px;
 }
 #ticket-devil-tail {
 	/*background-image: 'devil_tail.png';
@@ -96,6 +109,10 @@ a#ticket-devil-logo-link:active {
 	min-width: 300px;
 	width: 80%;
 	max-width: 800px;
+}
+#body-container h1 {
+	font-family: 'Mukta';
+	font-size: 14pt;
 }
 .show-ticket-container  {
 	background-color: #faf7b2;
