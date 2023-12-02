@@ -15,6 +15,18 @@ class LoginCreateTicketsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "can search existing tickets" do
+    get "/search/show/anonymous/1"
+    assert_response :success
+    post "/search/one/1", :params => {:posted_search_params => 'table', :posted_page => 1 }
+    assert_response :redirect
+    follow_redirect!
+    #assert @tickets.includes?(Ticket.first) #.where(:ticket_to => 'one')
+    assert_select "table" do
+      assert_select "td.ticket-description" 
+    end
+  end
+
   test "bcc a ticket" do
     u = User.create({:email => 'user@user.com', :password => 'deftones', :password_confirmation => 'deftones' })
     get new_user_registration_path
