@@ -18,8 +18,8 @@ class SearchController < ApplicationController
       @tickets =  Ticket.where([ "ticket_from like ? or ticket_to like ? or description like ?", @aterms, @aterms, @aterms]).paginate(:page => @page)
       @count =  Ticket.where([ "ticket_from like ? or ticket_to like ? or description like ?", @aterms, @aterms, @aterms]).count
     end
-    puts "search params are " + @search_params
-    puts "page is " + @page
+    #puts "search params are " + @search_params
+    #puts "page is " + @page
   end
 
   def create
