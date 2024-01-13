@@ -6,7 +6,7 @@ class SearchController < ApplicationController
     @search_params = params[:search_params]
     @page = params[:page]
     @terms = @search_params.gsub(/\+/, ' ') #turn +'s back into spaces for searching again - and for the query
-    @tickets = Ticket.where("match(ticket_to, ticket_from, description) against (?)", @terms).paginate(:page => @page)
+    @tickets = Ticket.where("match(ticket_to, ticket_from, description) against (?)", @terms).paginate(:page => @page, :per_page => 5)
     @count = Ticket.where("match(ticket_to, ticket_from, description) against (?)", @terms).count
     @aterms = ''
     if @count == 0
@@ -15,7 +15,7 @@ class SearchController < ApplicationController
         @aterms = @aterms + '%' + term
       end
       @aterms = @aterms + "%"
-      @tickets =  Ticket.where([ "ticket_from like ? or ticket_to like ? or description like ?", @aterms, @aterms, @aterms]).paginate(:page => @page)
+      @tickets =  Ticket.where([ "ticket_from like ? or ticket_to like ? or description like ?", @aterms, @aterms, @aterms]).paginate(:page => @page, :per_page => 5)
       @count =  Ticket.where([ "ticket_from like ? or ticket_to like ? or description like ?", @aterms, @aterms, @aterms]).count
     end
     #puts "search params are " + @search_params

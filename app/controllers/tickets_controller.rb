@@ -8,7 +8,7 @@ class TicketsController < ApplicationController
     else
       @page = params[:page]
     end
-    @tickets = Ticket.all.includes(:creator).order(:created_at => :desc).paginate(:page => @page)
+    @tickets = Ticket.all.includes(:creator).order(:created_at => :desc).paginate(:page => @page, :per_page => 5)
   end
 
   # GET /tickets/1 or /tickets/1.json
