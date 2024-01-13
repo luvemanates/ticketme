@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :ticket_comments
 
   #devise_for :users
 
