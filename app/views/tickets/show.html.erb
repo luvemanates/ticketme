@@ -9,7 +9,7 @@
 </div>
 <%= link_to "Leave a comment", new_ticket_comment_path(:ticket_id => @ticket.id) %>
 <div>
-  <%= for ticket_comment in @ticket_comments do %>
+  <% for ticket_comment in @ticket_comments do %>
     <%= render ticket_comment, :partial => 'ticket_comment/_ticket_comment' %>
   <% end %>
 </div>

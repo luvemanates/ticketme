@@ -57,4 +57,19 @@ class LoginCreateTicketsTest < ActionDispatch::IntegrationTest
     end
     assert u.tickets.include? Ticket.last
   end
+
+  test "assert can create a ticket comment" do
+    @ticket_comment = ticket_comments(:one)
+    u = User.create({:email => 'user@user.com', :password => 'deftones', :password_confirmation => 'deftones' })
+    get new_user_registration_path
+    assert_response :success
+    post user_session_path, :params => { :user => { :email => 'user@user.com', :password => 'deftones' } }
+    assert_redirected_to root_path
+    assert_difference("TicketComment.count") do
+      post ticket_comments_url, :params => { :ticket_comment => { :ticket_id => Ticket.first.id, 
+                                                                 :comment => "This should be worth more."} }
+    end
+
+    assert_redirected_to ticket_url(TicketComment.last.ticket)
+  end
 end
