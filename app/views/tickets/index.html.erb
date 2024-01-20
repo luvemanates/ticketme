@@ -3,10 +3,8 @@
 <h1>Tickets</h1>
 
 <div id="tickets">
-  <% i = 1 %>
   <% @tickets.each do |ticket| %>
-    <%= render ticket, :current_ticket_count => i %>
-    <% i = i + 1 %>
+    <%= render ticket, :current_ticket_count => ticket.id %>
     <p style="text-align: right;">
       <%= link_to "Show this ticket", ticket %>
     </p>

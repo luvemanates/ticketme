@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @ticket %>
+<%= render @ticket, :current_ticket_count => @ticket.id %>
 <div>
   <%= link_to "Edit this ticket", edit_ticket_path(@ticket) %> |
   <%= link_to "Back to tickets", tickets_path %>
