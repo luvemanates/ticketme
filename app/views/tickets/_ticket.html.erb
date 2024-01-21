@@ -27,14 +27,17 @@
             <strong>Cbc amount:</strong><br/>
             <%= number_to_currency(ticket.cbc_amount) %>
           </td>
-          <td colspan"1" class="empty">
+          <td colspan"1" >
+            <strong>Created At:</strong>
+            <br/>
+            Ticket since <%= time_ago_in_words(ticket.created_at) %> ago
           </td>
         <tr>
           <td colspan="1">
             <strong>Creator:</strong><br/>
             <%= ticket.creator.display_name %>
           </td>
-          <td colspan="1" class="empty">
+          <td colspan="1">
           </td>
         </tr>
         <tr>
@@ -49,6 +52,5 @@
         </tr>
       </tbody>
     </table>
-    Ticket since <%= time_ago_in_words(ticket.created_at) %> ago
   </div>
 </a>

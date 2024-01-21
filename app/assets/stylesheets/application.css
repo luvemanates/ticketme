@@ -149,13 +149,13 @@ a#ticket-devil-logo-link:active {
 }
 table.show-ticket {
 	border-collapse: collapse;
-	width: 792px;
-	height: 350px;
+	width: 776px;
+	height: 370px;
 	top: 50px;
+	left: 22px;
 	position: relative;
 }
 .show-ticket-container table tr td {
-	outline: 1px solid gray;
 	vertical-align: top;
 }
 .show-ticket-container table tr td {
@@ -183,12 +183,17 @@ table tr td.empty {
 }
 
 #new-ticket-container {
-	background-color: #faf7b2;
-	width: 100%;
+	background-image: url("ticketdevil_green_ticket.png");
+	width: 800px;
+	height: 428px;
 }
 table.new-ticket-table {
 	border-collapse: collapse;
-	width: 100%;
+	width: 776px;
+	height: 348px;
+	top: 50px;
+	left: 22px;
+	position: relative;
 }
 table.new-ticket-table tr td{
 	outline: 1px solid gray;
@@ -197,6 +202,10 @@ table.new-ticket-table tr td{
 	text-transform: uppercase;
     	font-family: 'Mukta', sans-serif;
 	font-size: 12pt;
+}
+.form_button {
+	position:relative;
+	top: 50px;
 }
 .new-ticket input {
 	font-size: 14pt;
