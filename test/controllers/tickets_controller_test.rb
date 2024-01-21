@@ -47,9 +47,9 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update ticket" do
+  test "should make a ticket based on old one" do
     patch ticket_url(@ticket), params: { ticket: { category_id: @ticket.category_id, cbc_amount: @ticket.cbc_amount, creator_id: @ticket.creator_id, description: @ticket.description, rank: @ticket.rank, ticket_from: @ticket.ticket_from, ticket_to: @ticket.ticket_to } }
-    assert_redirected_to ticket_url(@ticket)
+    assert_redirected_to ticket_url(Ticket.last)
   end
 
   test "should destroy ticket" do

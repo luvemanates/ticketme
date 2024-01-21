@@ -72,9 +72,14 @@ class TicketsController < ApplicationController
 
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
+    @ticket = Ticket.new(ticket_params)
+    creator = current_user #@ticket.creator
+    unless creator.is_a? User
+      @ticket.creator = User.find_by_email('anonymous@ticketme.com')
+    end
     respond_to do |format|
-      if @ticket.update(ticket_params)
-        format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
+      if @ticket.save
+        format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully created based on the old ticket." }
         format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit, status: :unprocessable_entity }
