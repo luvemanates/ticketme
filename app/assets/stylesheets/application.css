@@ -45,6 +45,12 @@
 	width: 50px;
 	height: auto;
 }
+#menu-browse-link {
+	padding-top: 20px;
+	padding-left: 100px;
+	width: 50px;
+	height: auto;
+}
 #menu-login {
 	padding-top: 20px;
 	padding-left: 100px;

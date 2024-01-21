@@ -28,6 +28,10 @@
       <div id="menu-search-link">
         <%= link_to "Search", { :action => 'show', :controller => '/search', :search_params => 'anonymous', :page => 1} %>
       </div>
+      
+      <div id="menu-browse-link">
+        <%= link_to "Browse", root_path %>
+      </div>
 
       <div id="menu-login">
         <% if user_signed_in? %>
