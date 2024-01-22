@@ -1,0 +1,10 @@
+<%= render @ticket, :current_ticket_count => @ticket.id %>
+<br/>
+<br/>
+<br/>
+Users that are watching this ticket.
+<% for user in @users %>
+  <div class="users">
+    <%= user.email %> 
+  </div>
+<% end %>
