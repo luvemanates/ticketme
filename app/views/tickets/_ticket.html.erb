@@ -43,7 +43,7 @@
         <tr>
           <td colspan="1">
             <strong>Rank:</strong><br/>
-            <%= ticket.rank %>
+            <%= link_to ticket.rank, ticket_users_path(ticket.id) %>
           </td>
           <td colspan="1">
             <strong>Category:</strong><br/>

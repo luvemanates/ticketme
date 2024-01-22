@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :tickets do 
     put "bcc", :action => 'bcc'
+    get "users" , :action => 'users'
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

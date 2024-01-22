@@ -26,6 +26,11 @@ class TicketsController < ApplicationController
     end
   end
 
+  def users
+    @ticket = Ticket.find(params[:ticket_id])
+    @users = @ticket.users
+  end
+
   # PUT /tickets/1/bcc
   def bcc
     @ticket = Ticket.find(params[:ticket_id])
