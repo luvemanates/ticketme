@@ -154,6 +154,15 @@ a#ticket-devil-logo-link:active {
 	top: -448px;
 	left: 289px;
 }
+.tape_top_left {
+	background-image: url("ticketdevil_tape_middle.png");
+	width: 178px;
+	height: 43px;
+	position: relative;
+	top: -425px;
+	left: -59px;
+	transform: rotate(-45deg);
+}
 .show-ticket-container  {
 	/*background-color: #faf7b2;*/
 }
