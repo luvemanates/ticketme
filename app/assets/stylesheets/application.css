@@ -183,7 +183,7 @@ a#ticket-devil-logo-link:active {
 }
 table.show-ticket {
 	border-collapse: collapse;
-	width: 776px;
+	width: 709px;
 	height: 370px;
 	top: 50px;
 	left: 22px;
@@ -217,13 +217,13 @@ table tr td.empty {
 }
 
 #new-ticket-container {
-	background-image: url("ticketdevil_green_ticket.png");
+	background-image: url("ticketdevil_ticket_green.png");
 	width: 800px;
 	height: 428px;
 }
 table.new-ticket-table {
 	border-collapse: collapse;
-	width: 776px;
+	width: 709px;
 	height: 348px;
 	top: 50px;
 	left: 22px;
