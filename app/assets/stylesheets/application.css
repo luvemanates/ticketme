@@ -16,6 +16,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap');
 @import url('elegant-typewriter.regular.ttf');
 @import url('bucchery.personal-used.otf');
+@import url('engravers_gothic.otf');
 @font-face {
     	font-family: 'Mukta', sans-serif;
     	src: url('https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap');
@@ -28,10 +29,30 @@
 	font-family: 'bucchery';
 	src: url('bucchery.personal-used.otf');
 }
+@font-face {
+	font-family: 'egothic';
+	src: url('engravers_gothic.otf');
+}
+.egothic {
+	text-transform: uppercase;
+	font-family: 'egothic';
+}
 
+#wallpaper {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 80px;
+	min-height: 100%;
+	height: auto;
+	background-image: url('wallpaper_leaf.png');
+	background-repeat: repeat;
+}
 #menu {
-  display: flex;
-  width: 100%;
+        position:relative;
+  	top: 0px;
+	left: 75px;
+  	width: 100%;
 }
 #menu-new-ticket-link {
 	padding-top: 20px;
@@ -62,24 +83,24 @@
 	text-decoration: none;
 }
 a#ticket-devil-logo-link {
-	color: gray;
+	color: lightgray;
 	text-decoration: none;
 }
 a#ticket-devil-logo-link:link {
-	color: gray;
+	color: lightgray;
 	text-decoration: none;
 }
 a#ticket-devil-logo-link:hover {
-	color: black;
+	color: red;
 	text-decoration: none;
 }
 a#ticket-devil-logo-link:visited {
 	text-decoration: none;
-	color: white;
+	color: lightgray;
 }
 a#ticket-devil-logo-link:active {
 	text-decoration: none;
-	color: gray;
+	color: lightgray;
 }
 #ticket-devil-logo {
 	top: 0px;
@@ -90,8 +111,8 @@ a#ticket-devil-logo-link:active {
 	border: 0;
 	outline: 0;
 	margin: 0;
-	background-color: white;
-	color: gray;
+	background-color: transparent;
+	color: lightgray;
 	padding: 10px;
 }
 #ticket-devil-tail {
@@ -108,7 +129,8 @@ a#ticket-devil-logo-link:active {
 	width: 5%;
 }
 #body-container {
-	display: block;
+	display: relative;
+	
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
