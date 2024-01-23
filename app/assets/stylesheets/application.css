@@ -120,6 +120,14 @@ a#ticket-devil-logo-link:active {
 	font-family: 'Mukta';
 	font-size: 14pt;
 }
+.tape_middle {
+	background-image: url("ticketdevil_tape_middle.png");
+	width: 178px;
+	height: 43px;
+	position: relative;
+	top: -448px;
+	left: 289px;
+}
 .show-ticket-container  {
 	/*background-color: #faf7b2;*/
 }
