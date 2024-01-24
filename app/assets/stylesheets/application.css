@@ -372,3 +372,32 @@ input#create-ticket-button {
 	color: black;
 	border-radius: 7px;
 }
+.search_label {
+	font-family: 'Mukta';
+}
+#search_container {
+	margin-top: 20px;
+	border: 1px solid #e8e8e8;
+	border-radius: 10px;
+	width: 600px;
+}
+#search_container input {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
+}
+#search_btn_container {
+	padding: 5px;
+	margin-left: 10px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
+}
+.seperator {
+	padding: 20px 0px 20px 0px;
+}

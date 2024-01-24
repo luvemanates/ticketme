@@ -1,18 +1,22 @@
-This is the search page.
+<h1>
+Search for any ticket
+</h1>
 
 
-<%= form_with :url => {:action => 'create', :controller => 'search'} do |form| %>
-  <%= form.label :search_params, style: "display: block" %>
-  <%= form.text_field :posted_search_params, :value => @search_params %>
-  <%= form.text_field :posted_page, :value => @page %>
-  <%= form.submit 'Search' %>
-<% end %>
-<br/>
-
-<% i = 1 %>
-<% for ticket in @tickets %>
-  <%= render 'tickets/ticket', :ticket => ticket, :current_ticket_count => i %>
+<div id="search_container">
+  <%= form_with :url => {:action => 'create', :controller => 'search'} do |form| %>
+    <%= form.label :search_params, style: "display: block", :class => "search_label" %>
+    <%= form.text_field :posted_search_params, :value => @search_params %>
+    <%= form.hidden_field :posted_page, :value => @page %>
+    <%= form.submit 'Search', :id => 'search_btn_container' %>
+  <% end %>
   <br/>
-  <% i = i + 1 %>
-<% end %>
+</div>
+<div class="seperator">&nbsp;</div>
+<% i = 1 %>
+  <% for ticket in @tickets %>
+    <%= render 'tickets/ticket', :ticket => ticket, :current_ticket_count => i %>
+    <br/>
+    <% i = i + 1 %>
+  <% end %>
 <%= will_paginate @tickets %>
