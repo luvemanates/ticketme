@@ -257,7 +257,15 @@ table.new-ticket-table tr td{
 }
 .form_button {
 	position:relative;
-	top: 50px;
+	top: 90px;
+}
+.form_button input[type=submit] {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
 }
 .new-ticket input {
 	font-size: 14pt;
@@ -439,4 +447,28 @@ input#create-ticket-button {
 	background-color: white;
 	color: black;
 	border-radius: 7px;
+}
+#new_comment_container {
+}
+#new_comment_container {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
+}
+#comment_text_container input[type=text] {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: #e8e8e8;
+	color: black;
+	border-radius: 7px;
+	width: 300px;
+	height: 70px;
+}
+#comment_submit_container {
+	width: 311px;
+	text-align: right;
 }
