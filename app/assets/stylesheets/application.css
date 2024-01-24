@@ -325,7 +325,7 @@ input#create-ticket-button {
 	width: 400px;
 	text-align: left;
 }
-#login_form {
+#login_form, #registration_form {
 	margin-top: 20px;
 	border: 1px solid #e8e8e8;
 	border-radius: 10px;
@@ -333,4 +333,24 @@ input#create-ticket-button {
 }
 #login_btn_container {
 	width: 310px;
+}
+#login_btn_container input[type=submit] {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
+}
+#registration_btn_container {
+	margin-top: 10px;
+	width: 310px;
+}
+#registration_btn_container input[type=submit] {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
 }
