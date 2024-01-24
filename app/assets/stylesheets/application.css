@@ -163,6 +163,15 @@ a#ticket-devil-logo-link:active {
 	left: -59px;
 	transform: rotate(-45deg);
 }
+.tape_top_right {
+	background-image: url("ticketdevil_tape_middle.png");
+	width: 178px;
+	height: 43px;
+	position: relative;
+	top: -425px;
+	left: 683px;
+	transform: rotate(45deg);
+}
 .show-ticket-container  {
 	/*background-color: #faf7b2;*/
 }
@@ -385,9 +394,12 @@ input#create-ticket-button {
 	padding: 5px;
 	font-family: 'Mukta';
 	border: 1px solid #e8e8e8;
-	background-color: white;
+	background-color: #e8e8e8;
 	color: black;
 	border-radius: 7px;
+}
+#search_container input[type=submit] {
+	background-color: white;
 }
 #search_btn_container {
 	padding: 5px;
@@ -400,4 +412,31 @@ input#create-ticket-button {
 }
 .seperator {
 	padding: 20px 0px 20px 0px;
+}
+.bcc_ticket {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
+}
+.bcc_btn_container {
+	text-align: right; 
+	display: inline-block;
+	margin-left: auto;
+	width: 80%;
+}
+.show_comment_container {
+	text-align: right; 
+	display: inline-block;
+	margin-left: auto;
+}
+.btn {
+	padding: 5px;
+	font-family: 'Mukta';
+	border: 1px solid #e8e8e8;
+	background-color: white;
+	color: black;
+	border-radius: 7px;
 }

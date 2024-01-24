@@ -5,10 +5,12 @@
 <div id="tickets">
   <% @tickets.each do |ticket| %>
     <%= render ticket, :current_ticket_count => ticket.id %>
-    <p style="text-align: right;">
-      <%= link_to "Show this ticket", ticket %>
-    </p>
-    <%= button_to "BCC: this ticket", ticket_bcc_path(ticket), method: :put, :class => "bcc-ticket" %>
+    <div class="bcc_btn_container">
+      <%= button_to "BCC: this ticket", ticket_bcc_path(ticket), method: :put, :class => "bcc_ticket" %>
+    </div>
+    <div class="show_comment_container">
+      <%= button_to "Show comments", ticket_path(ticket), :method => :get, :class => 'btn' %>
+    </div>
     <div class="ticket-seperator">
       &nbsp;
     </div>
