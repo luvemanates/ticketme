@@ -472,3 +472,9 @@ input#create-ticket-button {
 	width: 311px;
 	text-align: right;
 }
+#tickets_container {
+	border: 1px solid #e8e8e8;
+	border-radius: 7px;
+	font-family: 'Mukta';
+	background-color: white;
+}

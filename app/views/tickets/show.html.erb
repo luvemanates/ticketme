@@ -8,7 +8,8 @@
   <!--  <%= button_to "Destroy this ticket", @ticket, method: :delete, :class => "delete-ticket" %> -->
 </div>
 <%= link_to "Leave a comment", new_ticket_comment_path(:ticket_id => @ticket.id) %>
-<div>
+<h1>Comments</h1>
+<div id="tickets_container">
   <% for ticket_comment in @ticket_comments do %>
     <%= render ticket_comment, :partial => 'ticket_comment/_ticket_comment' %>
   <% end %>
