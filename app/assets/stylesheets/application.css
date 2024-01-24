@@ -300,3 +300,37 @@ input#create-ticket-button {
 	font-size: 12pt;
 	/*margin-left: 80%; */
 }
+#new_user {
+	font-family: 'Mukta', sans-serif;
+	font-size: 12pt;
+}
+#new_user input[type=email] {
+	border-radius: 10px;
+	background-color: #e8e8e8;
+	border: 1px solid gray;
+	width: 300px;
+	height: 25px;
+}
+#new_user input[type=password] {
+	border-radius: 10px;
+	background-color: #e8e8e8;
+	border: 1px solid gray;
+	width: 300px;
+	height: 25px;
+}
+.actions {
+	text-align: right;
+}
+#remember_me {
+	width: 400px;
+	text-align: left;
+}
+#login_form {
+	margin-top: 20px;
+	border: 1px solid #e8e8e8;
+	border-radius: 10px;
+	width: 600px;
+}
+#login_btn_container {
+	width: 310px;
+}
