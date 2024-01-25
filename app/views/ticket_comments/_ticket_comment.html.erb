@@ -1,4 +1,4 @@
-<div id="<%= dom_id ticket_comment %>" class="ticket_comment <%= comment_color(ticket_comment.id) %>">
+<div id="<%= dom_id ticket_comment %>" class="ticket_comment <%= comment_color(current_comment_count) %>"> 
   <p>
     <strong>User:</strong>
     <%= ticket_comment.user.email %>

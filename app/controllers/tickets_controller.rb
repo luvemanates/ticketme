@@ -13,7 +13,7 @@ class TicketsController < ApplicationController
 
   # GET /tickets/1 or /tickets/1.json
   def show
-    @ticket_comments = @ticket.ticket_comments
+    @ticket_comments = @ticket.ticket_comments.order(:created_at => :desc)
   end
 
   # GET /tickets/new

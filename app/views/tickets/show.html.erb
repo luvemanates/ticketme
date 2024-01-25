@@ -8,8 +8,10 @@
 </div>
 <%= button_to "Leave a comment", new_ticket_comment_path(:ticket_id => @ticket.id), :method => :get, :class => 'btn', :params => {:ticket_id => @ticket.id } %>
 <h1>Comments</h1>
+<% i = 0 %>
 <div id="ticket_comments_container">
   <% for ticket_comment in @ticket_comments do %>
-    <%= render ticket_comment, :partial => 'ticket_comment/_ticket_comment' %>
+    <%= render ticket_comment, :partial => 'ticket_comment/_ticket_comment', :current_comment_count => i %>
+    <% i = i + 1 %>
   <% end %>
 </div>
