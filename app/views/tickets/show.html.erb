@@ -6,9 +6,9 @@
 
   <!--  <%= button_to "Destroy this ticket", @ticket, method: :delete, :class => "delete-ticket" %> -->
 </div>
-<%= button_to "Leave a comment", new_ticket_comment_path(:ticket_id => @ticket.id), :method => :get, :class => 'btn' %>
+<%= button_to "Leave a comment", new_ticket_comment_path(:ticket_id => @ticket.id), :method => :get, :class => 'btn', :params => {:ticket_id => @ticket.id } %>
 <h1>Comments</h1>
-<div id="tickets_container">
+<div id="ticket_comments_container">
   <% for ticket_comment in @ticket_comments do %>
     <%= render ticket_comment, :partial => 'ticket_comment/_ticket_comment' %>
   <% end %>

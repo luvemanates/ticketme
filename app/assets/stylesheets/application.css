@@ -471,8 +471,9 @@ input#create-ticket-button {
 #comment_submit_container {
 	width: 311px;
 	text-align: right;
+	margin-top: 10px;
 }
-#tickets_container {
+#ticket_comments_container {
 	border: 1px solid #e8e8e8;
 	border-radius: 7px;
 	font-family: 'Mukta';
@@ -483,4 +484,14 @@ input#create-ticket-button {
 }
 #new_based_on_container {
 	text-align: right;
+}
+.ticket_comment {
+	border-radius: 7px;
+	border: 1px solid #e8e8e8;
+}
+.ticket_comment.white {
+	background-color: white;
+
+.ticket_comment.gray {
+	background-color: #e8e8e8;
 }
