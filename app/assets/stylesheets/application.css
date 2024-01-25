@@ -478,3 +478,6 @@ input#create-ticket-button {
 	font-family: 'Mukta';
 	background-color: white;
 }
+#paginate_links_container {
+	text-align: center;
+}

@@ -16,14 +16,7 @@
     </div>
   <% end %>
 </div>
-
-<% if user_signed_in? %>
-  <%= button_to "Log Out", destroy_user_session_path, :method => 'delete' %>
-<% else %>
-  <%= link_to "Log in", new_user_session_path %>
-<% end %>
 <br/>
-<%= link_to "New ticket", new_ticket_path %>
-<%= link_to "search", { :action => 'show', :controller => 'search', :search_params => 'blah', :page => 1} %>
-
-<%= will_paginate @tickets %>
+<div id="paginate_links_container">
+  <%= will_paginate @tickets %>
+</div>

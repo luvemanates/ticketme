@@ -19,4 +19,6 @@ Search for any ticket
     <br/>
     <% i = i + 1 %>
   <% end %>
-<%= will_paginate @tickets %>
+<div id="paginate_links_container">
+  <%= will_paginate @tickets %>
+</div>
