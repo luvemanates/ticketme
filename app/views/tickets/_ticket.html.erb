@@ -35,19 +35,19 @@
         <tr>
           <td colspan="1">
             <strong>Creator:</strong><br/>
-            <%= ticket.creator.display_name %>
-          </td>
-          <td colspan="1">
-          </td>
-        </tr>
-        <tr>
-          <td colspan="1">
-            <strong>Rank:</strong><br/>
-            <%= link_to ticket.rank, ticket_users_path(ticket.id) %>
+            <%= ticket.creator.email %>
           </td>
           <td colspan="1">
             <strong>Category:</strong><br/>
             <%= ticket.category_id %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1">
+          </td>
+          <td colspan="1">
+            <strong>Rank:</strong><br/>
+            <%= link_to ticket.rank, ticket_users_path(ticket.id) %>
           </td>
         </tr>
       </tbody>
