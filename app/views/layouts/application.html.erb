@@ -50,4 +50,8 @@
       <%= yield %>
     </div>
   </body>
+    <script type="text/javascript">
+        var windowHeight = document.body.offsetHeight; 
+        document.getElementById('wallpaper').style.height = (windowHeight + 75) + "px";
+    </script>
 </html>

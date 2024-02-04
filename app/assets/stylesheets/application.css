@@ -42,11 +42,10 @@
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 80px;
-	min-height: 550%;
-	height: auto;
+	height: 100vh;
 	background-image: url('wallpaper_leaf.png');
 	background-repeat: repeat;
+	width: 80px;
 }
 #menu {
         position: relative;
