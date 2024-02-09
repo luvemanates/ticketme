@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_action :set_ticket, only: %i[ show edit update destroy ]
+  before_action :set_ticket, only: %i[ show edit update destroy tallybytto tallybytcreator ]
 
   # GET /tickets or /tickets.json
   def index
@@ -52,6 +52,18 @@ class TicketsController < ApplicationController
     redirect_to ticket_path(@ticket)
   end
   
+  def tallybytto
+    @tickets = Ticket.where(:ticket_to => @ticket.ticket_to)
+    @tally = 0
+    for ticket in @tickets
+      @tally = @tally + ticket.cbc_amount 
+    end
+  end
+  
+  def tallybytcreator
+
+  end
+
   # GET /tickets/1/edit
   def edit
   end

@@ -9,7 +9,7 @@
         <tr>
           <td colspan="1" class="ticket-to">
             <strong>Ticket to:</strong><br/>
-            <%= ticket.ticket_to %>
+            <%= link_to ticket.ticket_to, tallybytto_ticket_path(ticket)  %>
           </td>
           <td class="ticket-from" colspan="1">
             <strong>Ticket from:</strong><br/>
@@ -35,7 +35,7 @@
         <tr>
           <td colspan="1">
             <strong>Creator:</strong><br/>
-            <%= ticket.creator.email %>
+            <%= link_to ticket.creator.email, tallybytcreator_ticket_path(ticket)  %>
           </td>
           <td colspan="1">
             <strong>Category:</strong><br/>

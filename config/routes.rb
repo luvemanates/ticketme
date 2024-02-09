@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   resources :tickets do 
     put "bcc", :action => 'bcc'
     get "users" , :action => 'users'
+    member do
+      get "tallybytto"
+      get "tallybytcreator"
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
