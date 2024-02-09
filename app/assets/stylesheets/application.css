@@ -494,3 +494,6 @@ input#create-ticket-button {
 .ticket_comment.gray {
 	background-color: #e8e8e8;
 }
+span#tally_amount {
+	font-size: 32px;
+}

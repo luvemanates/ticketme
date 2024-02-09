@@ -53,15 +53,29 @@ class TicketsController < ApplicationController
   end
   
   def tallybytto
-    @tickets = Ticket.where(:ticket_to => @ticket.ticket_to)
+    @page = params[:page]
+    unless @page
+      @page = 1
+    end
+    @tickets = Ticket.includes(:creator).where(:ticket_to => @ticket.ticket_to).paginate(:page => @page, :per_page => 5)
+    @tickets_for_sum = Ticket.where(:ticket_to => @ticket.ticket_to)
     @tally = 0
-    for ticket in @tickets
+    for ticket in @tickets_for_sum
       @tally = @tally + ticket.cbc_amount 
     end
   end
   
   def tallybytcreator
-
+    @page = params[:page]
+    unless @page
+      @page = 1
+    end
+    @tickets = Ticket.includes(:creator).where(:creator => @ticket.creator).paginate(:page => @page, :per_page => 5)
+    @tickets_for_sum = Ticket.where(:creator => @ticket.creator)
+    @tally = 0
+    for ticket in @tickets_for_sum
+      @tally = @tally + ticket.cbc_amount 
+    end
   end
 
   # GET /tickets/1/edit

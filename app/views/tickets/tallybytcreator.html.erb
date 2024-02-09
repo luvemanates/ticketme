@@ -1,5 +1,5 @@
 <h1>Total tally for:</h1>
-<%= @ticket.ticket_to %>
+<%= @ticket.creator.email %>
 <p>
 The running sum for tickets that have been assigned to that person is:
 <span id="tally_amount"><%= number_to_currency(@tally) %></span>
