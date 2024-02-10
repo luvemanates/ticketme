@@ -61,7 +61,7 @@ class TicketsController < ApplicationController
     @tickets_for_sum = Ticket.where(:ticket_to => @ticket.ticket_to)
     @tally = 0
     for ticket in @tickets_for_sum
-      @tally = @tally + ticket.cbc_amount 
+      @tally = @tally + ticket.cbc_amount.to_f 
     end
   end
   
@@ -74,7 +74,7 @@ class TicketsController < ApplicationController
     @tickets_for_sum = Ticket.where(:creator => @ticket.creator)
     @tally = 0
     for ticket in @tickets_for_sum
-      @tally = @tally + ticket.cbc_amount 
+      @tally = @tally + ticket.cbc_amount.to_f 
     end
   end
 
