@@ -1,11 +1,18 @@
-<h1>Total tally for:</h1>
-<%= @ticket.creator.email %>
-<p>
-The running sum for tickets that have been assigned to that person is:
-<span id="tally_amount"><%= number_to_currency(@tally) %></span>
-</p>
-<br/>
-<br/>
+<div id="tallycreator">
+  <h1>Total tally for:</h1>
+  <%= @ticket.creator.email %>
+  <p>
+  The running sum for tickets that have been assigned to that person is:
+  <% if @tally.to_f < 1 %>
+    <span id="tally_amount"><%= Float::INFINITY.to_s %></span>
+  <% else %>
+    <span id="tally_amount"><%= number_to_currency(@tally) %></span>
+  <% end %>
+  </p>
+  <br/>
+  <br/>
+</div>
+
 <h2>From tickets</h2>
 
 <div id="tickets">
