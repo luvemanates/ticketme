@@ -28,12 +28,16 @@
         <%= link_to "New ticket", new_ticket_path %>
       </div>
 
+      <div id="menu-popular-link" class="menu egothic">
+        <%= link_to "Popular tickets", popular_tickets_path %>
+      </div>
+
       <div id="menu-search-link" class="menu egothic">
         <%= link_to "Search", { :action => 'show', :controller => '/search', :search_params => 'anonymous', :page => 1} %>
       </div>
       
       <div id="menu-browse-link" class="menu egothic">
-        <%= link_to "Browse", root_path %>
+        <%= link_to "Recent Tickets", root_path %>
       </div>
 
       <div id="menu-login" class="menu egothic">

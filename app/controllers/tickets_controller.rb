@@ -10,6 +10,16 @@ class TicketsController < ApplicationController
     end
     @tickets = Ticket.all.includes(:creator).order(:created_at => :desc).paginate(:page => @page, :per_page => 5)
   end
+  
+  # GET /tickets or /tickets.json
+  def popular
+    unless params[:page]
+      @page = 1 
+    else
+      @page = params[:page]
+    end
+    @tickets = Ticket.all.includes(:creator).order(:cbc_amount => :desc).paginate(:page => @page, :per_page => 5)
+  end
 
   # GET /tickets/1 or /tickets/1.json
   def show

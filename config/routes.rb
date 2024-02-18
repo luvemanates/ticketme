@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       get "tallybytto"
       get "tallybytcreator"
     end
+    collection do
+      get "popular"
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
