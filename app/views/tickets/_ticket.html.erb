@@ -25,7 +25,11 @@
         <tr>
           <td colspan="1">
             <strong>Cbc amount:</strong><br/>
-            <%= number_to_currency(ticket.cbc_amount) %>
+            <% if ticket.cbc_amount.to_f < 1 %>
+              <%= Float::INFINITY  %>
+            <% else %>
+              <%= number_to_currency(ticket.cbc_amount) %>
+            <% end %>
           </td>
           <td colspan"1" >
             <strong>Created At:</strong>
