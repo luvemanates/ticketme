@@ -104,7 +104,9 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(ticket_params)
     creator = current_user #@ticket.creator
-    unless creator.is_a? User
+    if creator.is_a? User
+      @ticket.creator = creator
+    else
       @ticket.creator = User.find_by_email('anonymous@ticketme.com')
     end
     respond_to do |format|
@@ -113,6 +115,7 @@ class TicketsController < ApplicationController
         format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully created." }
         format.json { render :show, status: :created, location: @ticket }
       else
+        puts @ticket.errors
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
