@@ -102,7 +102,7 @@ class LedgerEntryBlock
   before_create :pre_init
   before_create :init_logger
   before_create :update_balance, :calculate_hash
-  before_create :add_merkle_leaf
+  #before_create :add_merkle_leaf
   CREDIT = "credit"
   DEBIT = "debit"
 

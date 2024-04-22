@@ -8,7 +8,7 @@ class MerkleTree
   include Mongoid::Timestamps
 
   has_many :merkle_tree_nodes
-  belongs_to :ledger, optional: true, :index => true
+  belongs_to :blockchain, optional: true, :index => true
 
   field :root_node_id
 
@@ -36,18 +36,13 @@ class MerkleTree
 
   def add_leaf(params)
     #recently_added_leaves = MerkleTreeNode.where(:node_type => 'leaf').order(:created_at => :desc).limit(2) 
-    new_leaf = MerkleTreeNode.new(:ledger_entry_block_id => params[:ledger_entry_block_id], :merkle_tree => self, :node_type => MerkleTreeNode::LEAF, :stored_data => params[:stored_data])
-    #new_leaf.stored_data = params[:stored_data] #there is a bug somehwere because i shouldnt need to do this
-    #new_leaf.merkle_hash = Digest::SHA256.digest(new_leaf[:stored_data])
-    #new_leaf.fulfilled = true
-
-    #new_leaf.parent = nil
+    new_leaf = MerkleTreeNode.new(:merkle_tree => self, :node_type => MerkleTreeNode::LEAF, :stored_data => params[:stored_data])
     available_parent = available_parent(new_leaf)
     new_leaf.save
     update_digests_for_recent_leaf(new_leaf)
     return new_leaf
-    #puts "new leaf added " + new_leaf.inspect
-    #puts "available parent " + available_parent.inspect
+    #@logger.debug "new leaf added " + new_leaf.inspect
+    #@logger.debug "available parent " + available_parent.inspect
   end
 
   def available_parent(new_node)
@@ -185,7 +180,7 @@ class MerkleTreeNode
 
   belongs_to :parent, optional: true, :class_name => 'MerkleTreeNode', :foreign_key => 'parent_id', :index => true
   #has_many :children, :class_name => 'MerkleTreeNode', :primary_key => 'id', :foreign_key => 'parent_id'
-  belongs_to :ledger_entry_block, optional: true, :index => true
+  belongs_to :block, optional: true, :index => true
 
 
   field :node_type
