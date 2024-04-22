@@ -66,6 +66,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
+gem "base58"
 gem "mongoid"
 gem "mysql2"
 gem "devise"

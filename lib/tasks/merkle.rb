@@ -198,7 +198,11 @@ class MerkleTreeNode
     return if self.fulfilled
     case self.node_type
       when MerkleTreeNode::LEAF
-        self.merkle_hash = Base64.encode64(Digest::SHA256.digest(self.stored_data))
+        if base64?(self.stored_data)
+          self.merkle_hash = Base64.encode64(Digest::SHA256.digest(self.stored_data))
+        else
+          self.merkle_hash = Base64.encode64(Digest::SHA256.digest(Base64.encode64(self.stored_data)))
+        end
         self.fulfilled = true
       when MerkleTreeNode::PARENT, MerkleTreeNode::ROOT
         children = self.children
@@ -220,6 +224,9 @@ class MerkleTreeNode
     end
   end
 
+  def base64?(value)
+    value.is_a?(String) && Base64.strict_encode64(Base64.decode64(value)) == value
+  end
   #right child is most recently made
   #left child is the older of the siblings
   def children

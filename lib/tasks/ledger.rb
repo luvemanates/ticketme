@@ -20,7 +20,7 @@ class Ledger
   after_find :init_logger
   before_create :pre_init
   before_create :init_logger
-  before_create :create_merkle_tree
+  #before_create :create_merkle_tree
 
   def pre_init
     self.ledger_name = "Default Ledger Name" if self.ledger_name.nil?
