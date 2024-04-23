@@ -32,7 +32,7 @@ class Block
 
   def pre_init
     @logger = Logger.new(Logger::DEBUG)
-    previous_block = Block.where(:blockchain => self.blockchain, :created_at => :desc).first
+    previous_block = Block.where(:blockchain_id => self.blockchain.id).order(:created_at => :desc).first
     if previous_block.nil?
       self.index = 1
       self.previous_hash = ''
@@ -44,7 +44,7 @@ class Block
 
   def add_merkle_leaf
     unless self.blockchain.merkle_tree.nil?
-      previous_block = Block.where(:created_at => :desc).first
+      previous_block = Block.where(:blockchain_id => self.blockchain.id).order(:created_at => :desc).first
       if previous_block
         self.previous_hash = previous_block.current_hash if not previous_block.nil?
       else
