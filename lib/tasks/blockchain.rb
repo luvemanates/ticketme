@@ -53,7 +53,7 @@ class Block
       @logger.debug( "Adding merkle tree leaf")
       stored_data = "#{self.index}#{self.created_at}#{self.receiver_wallet_address}#{self.receiver_wallet_balance}"
       stored_data = stored_data + Base64.encode64(self.sender_signature.to_s)
-      stored_data = stored_data + previous_hash
+      stored_data = stored_data + previous_hash.to_s
       merkle_leaf = self.blockchain.merkle_tree.add_leaf(:block => self, :stored_data => stored_data)
       self.current_hash = merkle_leaf.merkle_hash
       mr = MerkleTreeNode.where(:merkle_tree => self.blockchain.merkle_tree, :node_type => MerkleTreeNode::ROOT).first
