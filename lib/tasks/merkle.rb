@@ -7,21 +7,114 @@ class MerkleTree
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  attr_accessor :logger
+
   has_many :merkle_tree_nodes
   belongs_to :blockchain, optional: true, :index => true
 
   field :root_node_id
 
-  def traverse_tree(subtree = nil)
+  before_save :pre_init
+
+  def pre_init
+    @logger = Logger.new(Logger::DEBUG)
+  end
+
+  def visit(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
+    return if subtree.fulfilled and leaf_inserted #this line is finished
+    case subtree.node_type
+      when MerkleTreeNode::LEAF
+        return leaf_inserted
+      when MerkleTreeNode::PARENT
+        leaf_inserted = insert_for_parent(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
+      when MerkleTreeNode::ROOT
+        leaf_inserted = insert_for_root(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
+    end
+  end
+
+
+  #can't rely on current_height if there needs to be a new root
+  def traverse_tree(subtree = nil, new_leaf = nil, leaf_height, current_height, leaf_inserted )
     return if subtree.nil?
+    return if subtree.fulfilled and leaf_inserted
     #visit current_node
+    leaf_inserted = visit(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
     return if subtree.children.nil?
-    puts subtree.inspect
+    #puts subtree.inspect
     nsubtree_left  = subtree.children.first
     nsubtree_right = subtree.children.last
-    traverse_tree( nsubtree_left )
-    traverse_tree( nsubtree_right )
+    traverse_tree( nsubtree_left, new_leaf, leaf_height, current_height + 1, leaf_inserted )
+    traverse_tree( nsubtree_right, new_leaf, leaf_height, current_height + 1, leaf_inserted )
   end
+  
+  def insert_for_root(subtree, new_leaf, leaf_height, current_height, leaf_inserted )
+    if subtree.children.size == 2
+      #if two leaves or two parents
+      if subtree.fulfilled #root is fulfilled so we need to create a new one
+        new_root = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "ROOT")
+        new_root.save
+        self.root_node_id = new_root.id
+        old_root = subtree
+        old_root.node_type = "PARENT"
+        old_root.parent = new_root
+        old_root.save
+      end
+    elsif subtree.children.size == 1
+      #if one leave or one parents
+      if subtree.children.first.node_type == "PARENT"
+        new_node = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "PARENT", :parent_id => subtree.id)
+        new_node.save
+      elsif subtree.children.first.node_type == "LEAF"
+        new_leaf.parent = subtree
+        new_leaf.save
+        leaf_inserted = true
+        return leaf_inserted
+      end
+    elsif subtree.children.size == 0
+      #if no leaf or parents at root
+      #insert a leaf.
+      new_leaf.parent = subtree
+      new_leaf.save
+      leaf_inserted = true
+      return leaf_inserted
+    end
+  end
+
+  def insert_for_parent(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
+    if subtree.children.size == 2
+      #if two leaves or two parents
+      #two leaves -- this node is filled so return
+      return leaf_inserted
+    elsif subtree.children.size == 1
+      #if one leave or parent
+      #one leaf
+      if subtree.children.first.node_type == "LEAF"
+        new_leaf.parent = subtree
+        new_leaf.save
+        leaf_inserted = true
+        return leaf_inserted
+      end
+      if subtree.children.first.node_type == "PARENT"
+        new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "PARENT", :parent_id => subtree.id)
+        new_parent.save
+      end
+    elsif subtree.children.size == 0
+      #if no leaves or parents
+      #if we are at the right height add leaf
+      if leaf_height == (current_height + 1)
+        new_leaf.parent = subtree
+        new_leaf.save
+        leaf_inserted = true
+        return leaf_inserted
+      elsif current_height < leaf_height 
+        new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "PARENT", :parent_id => subtree.id)
+        new_parent.save
+        leaf_inserted = true
+        return leaf_inserted
+      end
+    end
+  end
+
 
   def get_leaf_height
     leaf = MerkleTreeNode.where(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::LEAF).first
@@ -34,131 +127,47 @@ class MerkleTree
     return leaf_height
   end
 
+  def inspect_tree(subtree)
+    return if subtree.nil?
+    @logger.debug subtree.inspect
+    nsubtree_left  = subtree.children.first
+    nsubtree_right = subtree.children.last
+    inspect_tree( nsubtree_left )
+    inspect_tree( nsubtree_right)
+  end
+
   def add_leaf(params)
+    insert_done = false
     #recently_added_leaves = MerkleTreeNode.where(:node_type => 'leaf').order(:created_at => :desc).limit(2) 
-    new_leaf = MerkleTreeNode.new(:merkle_tree => self, :node_type => MerkleTreeNode::LEAF, :stored_data => params[:stored_data])
-    available_parent = available_parent(new_leaf)
-    new_leaf.save
-    update_digests_for_recent_leaf(new_leaf)
+    new_leaf = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::LEAF, :stored_data => params[:stored_data])
+
+    #case 1 - no nodes
+    if self.merkle_tree_nodes.empty?
+      new_root = MerkleTreeNode.new(:node_type => MerkleTreeNode::ROOT, :merkle_tree_id => self.id)
+      new_root.save
+      self.root_node_id = new_root.id
+      new_leaf.parent = new_root
+      new_leaf.save
+      insert_done = true
+    end
+    #case 2 recently added has space available -- easiest insert case
+    recently_added_leaf = MerkleTreeNode.where(:node_type => MerkleTreeNode::LEAF, :merkle_tree_id => self.id).order(:created_at => :desc).first 
+    if recently_added_leaf
+      if recently_added_leaf.parent.children.size == 1
+        new_leaf.parent = recently_added_leaf.parent
+        new_leaf.save
+        update_digests_for_recent_leaf(new_leaf)
+        insert_done = true
+      end
+    end
+    if not insert_done
+      current_root = MerkleTreeNode.where(:merkle_tree => self, :node_type => MerkleTreeNode::ROOT).first
+      traverse_tree(current_root, new_leaf, get_leaf_height(), 1, false)
+      #new_leaf.save
+      update_digests_for_recent_leaf(new_leaf)
+    end
     return new_leaf
     #@logger.debug "new leaf added " + new_leaf.inspect
-    #@logger.debug "available parent " + available_parent.inspect
-  end
-
-  def available_parent(new_node)
-    recently_added_leaf = MerkleTreeNode.where(:merkle_tree => self, :node_type => MerkleTreeNode::LEAF).order(:created_at => :desc).limit(1).first
-    if recently_added_leaf.nil? #if there are no leaves, we still need a root to add the leaf
-      #make root
-      new_root = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::ROOT )
-      new_root.save
-      self.root_node_id = new_root.id
-      self.save
-      new_node.parent = new_root
-      new_node.save
-      new_root.save
-      return new_root
-    else #there is a recent leaf that we have
-      ral_parent = recently_added_leaf.parent #this shouldn't be nil
-      can_add_parent = false
-      can_add_parent = (not ral_parent.nil?) 
-      can_add_parent_oth = (not ral_parent.children.nil?) if can_add_parent
-      if can_add_parent and can_add_parent_oth 
-        if recently_added_leaf.parent.children.size == 1
-          new_node.parent = recently_added_leaf.parent
-          new_node.save
-          return recently_added_leaf.parent
-        else #recently_added_leaf children is size 2 #last leafs inserted has full parents #need to take care of special cases
-          #leaf needs to make  parents based on currentleafheight
-          #if root is fulfilled we need to make a new root
-          avail_parent_sub(new_node)
-        end
-      else
-        avail_parent_sub(new_node)
-      end
-    end
-  end
-
-  def avail_parent_sub(new_node)
-    current_root = MerkleTreeNode.where(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::ROOT).first
-    current_root.save if current_root.children.size == 2
-    if current_root.fulfilled #thinking we should recursively use this code to iterate until an unfulfilled parent
-      #make new root
-      current_root.node_type = MerkleTreeNode::PARENT
-      new_root = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::ROOT )
-      self.root_node_id = new_root.id
-      self.save
-      new_root.save
-      current_root.parent = new_root
-      current_root.save
-      new_root.save #saving twice to compute merkle root with children available
-
-      new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::PARENT )
-      new_parent.parent = new_root
-      new_parent.save
-
-      previous_parent = new_parent
-      leaf_height = get_leaf_height
-      i = 2
-      while i < leaf_height
-        new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::PARENT )
-        new_parent.save
-        previous_parent.parent = new_parent
-        previous_parent.save
-        previous_parent = new_parent
-        i = i + 1
-      end
-      if i == leaf_height
-          new_node.parent = new_parent
-          new_node.save
-          new_parent.save #resave to calc child hash
-      end
-    else #current_root.fulfilled == false
-      avail_parent_sub_rec(current_root, 1, new_node, 0) #, new_node?
-    end
-    return new_node.parent
-  end
-
-  #this may need to be changed to start at the root and create parents otherwise we have traverse the tree and add merkle hash's after the leaf is added
-  #maybe traverse the tree following unfulfilled nodes, 
-  def avail_parent_sub_rec(subtree = nil, current_height = 1, new_node = nil, leaf_height =0)
-    return if subtree == nil
-    current_parent = subtree
-    if leaf_height == 0 or leaf_height.nil?
-      leaf_height = get_leaf_height
-    end
-
-    parent_children = current_parent.children
-    if parent_children.size == 1
-      new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::PARENT )
-      new_parent.parent = current_parent
-      new_parent.save
-      if current_height == leaf_height
-        new_node.parent = new_parent
-        new_node.save
-        new_parent.save #save to cacl merkle for new child
-        return new_parent
-      end
-      avail_parent_sub_rec(new_parent, current_height +1, new_node, leaf_height)
-    elsif parent_children.size == 0
-      if current_height < leaf_height
-        new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::PARENT )
-        new_parent.parent = current_parent
-        new_parent.save
-        current_parent.save #save to computer merkle for new child
-        avail_parent_sub_rec(new_parent, current_height +1, new_node, leaf_height)
-      else
-        new_node.parent = current_parent
-        new_node.save
-        current_parent.save #save to cacl merkle for new child
-      end
-    else #size == 2
-      if not parent_children.first.fulfilled
-        avail_parent_sub_rec(parent_children.first, current_height, new_node, leaf_height)
-      end
-      if not parent_children.last.fulfilled
-        avail_parent_sub_rec(parent_children.last, current_height, new_node, leaf_height)
-      end
-    end
   end
 
   #this is a log n operation
