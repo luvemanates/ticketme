@@ -6,12 +6,21 @@ require_relative 'digital_wallet'
 require_relative 'blockchain'
 
 
-dw = DigitalWallet.new(:wallet_name => 'TicketDevil Bank Wallet')
-dw.save
-mw = DigitalWallet.new(:wallet_name => 'TicketDevil Mint Wallet')
-mw.save
-blockchain = Blockchain.new(:name => "TicketDevil blockchain")
-blockchain.save
+dw = DigitalWallet.where(:wallet_name => 'TicketDevil Bank Wallet').first
+unless dw
+  dw = DigitalWallet.new(:wallet_name => 'TicketDevil Bank Wallet')
+  dw.save
+end
+mw = DigitalWallet.where(:wallet_name => 'TicketDevil Mint Wallet').first
+unless mw
+  mw = DigitalWallet.new(:wallet_name => 'TicketDevil Mint Wallet')
+  mw.save
+end
+blockchain = Blockchain.where(:name => "TicketDevil blockchain").first
+unless blockchain
+  blockchain = Blockchain.new(:name => "TicketDevil blockchain")
+  blockchain.save
+end
 loop do
   random_secret = (0...16).map { (65 + rand(26)).chr }.join 
   signature = mw.crypto_card.sign( random_secret )
