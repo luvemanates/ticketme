@@ -35,6 +35,22 @@ class MintServer
     @logger = Logger.new(Logger::DEBUG)
     @mint = TicketDevilMintingBank.new 
 
+    @blockchain = Blockchain.where(:name => "TicketDevil Blockchain").first
+    unless @blockchain
+      @blockchain = Blockchain.new(:name => "TicketDevil Blockchain")
+      @blockchain.save
+    end
+
+
+
+    bank_wallet = DigitalWallet.where(:wallet_name => 'Bank Wallet').first
+    unless bank_wallet
+      @bank_wallet = DigitalWallet.new(:wallet_name => 'Bank Wallet')
+      @bank_wallet.save
+    else
+      @bank_wallet = bank_wallet
+    end
+
     @mint_wallet = DigitalWallet.where(:wallet_name => 'Mint Wallet').first
     unless @mint_wallet
       @mint_wallet = DigitalWallet.new(:wallet_name => 'Mint Wallet')
@@ -59,15 +75,32 @@ class MintServer
   def run
     loop do
       @mint_wallet.reload
-      coin = @mint.mint(:face_value => 1, :digital_wallet => @mint_wallet)
-      @logger.debug "coin minted, checking balance of mint wallet now"
-      @mint_wallet.reload
+      #coin = @mint.mint(:face_value => 1, :digital_wallet => @mint_wallet)
+      #@logger.debug "coin minted, checking balance of mint wallet now"
+      #@mint_wallet.reload
       @mint_wallet.check_balance
-      @mint_wallet.debit_coin(coin)
-      @mint_wallet.reload
-      @mint_wallet.check_balance
-      #CentralizedExchange.transfer( @mint_wallet, bank_wallet, 1)
+      #@mint_wallet.debit_coin(coin)
+      #@mint_wallet.reload
+      #@mint_wallet.check_balance
+      arandom_secret = (0...16).map { (65 + rand(26)).chr }.join
+      signature = @mint_wallet.crypto_card.sign( arandom_secret )
+      verified = @mint_wallet.crypto_card.verify(signature, arandom_secret)
+
       data = {"wallet_identification" => @mint_wallet.wallet_identification.to_s, "coin_serial_number" => coin.serial_number, "coin_face_value" => coin.face_value.to_s } 
+      block = @blockchain.add_block(
+            :sender_wallet_address => @mint_wallet.wallet_identification,
+            :sender_wallet_balance => @mint_wallet.balance,
+            :receiver_wallet_address => @bank_wallet.wallet_identification,
+            :receiver_wallet_balance => @bank_wallet.balance,
+            :sender_public_key => Base64.encode64(@mint_wallet.crypto_card.public_key.to_s),
+            :transaction_amount => 1,
+            :sender_signature => Base64.encode64(signature),
+            :verifiable_data => random_secret)
+      @logger.debug "Inspecting block"
+      @logger.debug block.inspect
+      block.save
+
+=begin
       @logger.debug "data is "
       @logger.debug(data)
       ciphered_data = {}
@@ -77,6 +110,7 @@ class MintServer
       @logger.debug( "ciphered data is ")
       @logger.debug( ciphered_data)
       @client.puts(ciphered_data.to_json)
+=end
     end
     @client.close
   end

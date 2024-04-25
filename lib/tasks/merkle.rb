@@ -1,6 +1,7 @@
 require 'mongoid'
 require 'digest'
 require 'base64'
+require_relative 'blockchain'
 
 class MerkleTree
 
@@ -139,7 +140,7 @@ class MerkleTree
   def add_leaf(params)
     insert_done = false
     #recently_added_leaves = MerkleTreeNode.where(:node_type => 'leaf').order(:created_at => :desc).limit(2) 
-    new_leaf = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::LEAF, :stored_data => params[:stored_data])
+    new_leaf = MerkleTreeNode.new(:merkle_tree_id => self.id, :block_id => params[:block_id], :node_type => MerkleTreeNode::LEAF, :stored_data => params[:stored_data])
 
     #case 1 - no nodes
     if self.merkle_tree_nodes.empty?

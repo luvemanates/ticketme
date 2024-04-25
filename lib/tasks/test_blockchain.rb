@@ -17,11 +17,6 @@ loop do
   signature = mw.crypto_card.sign( random_secret )
   verified = mw.crypto_card.verify(signature, random_secret)
   throw "Could not verify signature" if not verified
-  tmp = Base64.encode64(signature)
-  puts tmp
-  puts "trying to encode twice"
-  tmp = Base64.encode64(tmp)
-  puts tmp
   block = blockchain.add_block( 
             :sender_wallet_address => mw.wallet_identification, 
             :sender_wallet_balance => mw.balance,
