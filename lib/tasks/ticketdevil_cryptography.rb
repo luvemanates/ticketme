@@ -140,16 +140,24 @@ class TicketDevilCipher
   def initialize
   end
 
-  def setup_cipher
-    @cipher = OpenSSL::Cipher::AES.new(128, :CBC)
-    @cipher.encrypt
-    @cipher_key = @cipher.random_key
-    @cipher_iv = @cipher.random_iv
+  def setup_cipher(*args) #method calls setup_cipher() and method calls setup_cipher(key, iv) as args[0] and args[1]
+    case args.size
+      when 0
+        @cipher = OpenSSL::Cipher::AES.new(128, :CBC)
+        @cipher.encrypt
+        @cipher_key = @cipher.random_key
+        @cipher_iv = @cipher.random_iv
+      when 2
+        @cipher = OpenSSL::Cipher::AES.new(128, :CBC)
+        @cipher.encrypt
+        @cipher.key = @cipher_key = args[0]
+        @cipher.iv = @cipher_iv = args[1]
+      end
   end
 
   def encrypt_with_cipher(data)
     encrypted = @cipher.update(data) + @cipher.final
-    return encode64(encrypted)
+    return encrypted
   end
 
   def setup_decipher(key, iv)
@@ -160,7 +168,7 @@ class TicketDevilCipher
   end
 
   def decrypt_with_cipher(encrypted_data)
-    data_to_decrypt = decode64(encrypted_data)
+    data_to_decrypt = encrypted_data
     plain = @decipher.update( data_to_decrypt ) + @decipher.final
     return plain
   end

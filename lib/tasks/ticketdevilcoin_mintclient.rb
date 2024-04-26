@@ -23,6 +23,7 @@ class MintClientBank
   attr_accessor :bank_client
   attr_accessor :bank_crypto
   attr_accessor :bank_wallet
+  attr_accessor :decipher
   attr_accessor :cipher
   attr_accessor :cipher_key
   attr_accessor :ciphera_iv
@@ -63,28 +64,37 @@ class MintClientBank
   def run
     cipher_done = false
     loop do
-      response = @bank_client.gets
-      @logger.debug("response is ")
-      @logger.debug( response )
-      params = JSON.parse(response) unless response.nil?
-      data = {}
+      #@logger.debug("running loop waiting for server")
+      #response = @bank_client.gets
+      #@logger.debug("response is ")
+      #@logger.debug( response )
+      #params = JSON.parse(response) unless response.nil?
 
       @decipher = TicketDevilCipher.new unless cipher_done
+      @cipher = TicketDevilCipher.new unless cipher_done
       
       @decipher.setup_decipher(@cipher_key, @cipher_iv) unless cipher_done
+      @decipher.setup_cipher unless cipher_done
 
-      @logger.debug "pre-cipher response params is"
-      @logger.debug params.inspect
+      @cipher.setup_cipher(@cipher_key, @cipher_iv) unless cipher_done
 
-      data["wallet_identification"] = @decipher.decrypt_with_cipher(decode64(params["wallet_identification"]))
-      data["coin_serial_number"] = @decipher.decrypt_with_cipher(decode64(params["coin_serial_number"]))
-      data["coin_face_value"] = @decipher.decrypt_with_cipher(decode64(params["coin_face_value"]))
+      #@logger.debug "pre-cipher response params is"
+      #@logger.debug params.inspect
+
+      #data["wallet_identification"] = @decipher.decrypt_with_cipher(decode64(params["wallet_identification"]))
+      #data["coin_serial_number"] = @decipher.decrypt_with_cipher(decode64(params["coin_serial_number"]))
+      #data["coin_face_value"] = @decipher.decrypt_with_cipher(decode64(params["coin_face_value"]))
+      ciphered_data = {}
+      ciphered_data["receiver_wallet_address"] = Base64.encode64(@cipher.encrypt_with_cipher(@bank_wallet.wallet_identification))
+      ciphered_data["receiver_wallet_balance"] = Base64.encode64(@cipher.encrypt_with_cipher(@bank_wallet.balance.to_s))
+
       @logger.debug "post-cipher data is "
-      @logger.debug data
+      @logger.debug ciphered_data
       @logger.debug "starting transfer"
-      mint_wallet = DigitalWallet.where(:wallet_identification => data["wallet_identification"]).first
-      @logger.debug mint_wallet.inspect
-      CentralizedExchange.transfer(mint_wallet, @bank_wallet, data["coin_serial_number"], data["coin_face_value"])
+      @bank_client.puts(ciphered_data.to_json)
+      #mint_wallet = DigitalWallet.where(:wallet_identification => data["wallet_identification"]).first
+      #@logger.debug mint_wallet.inspect
+      #CentralizedExchange.transfer(mint_wallet, @bank_wallet, data["coin_serial_number"], data["coin_face_value"])
       cipher_done = true
     end
     @bank_client.close

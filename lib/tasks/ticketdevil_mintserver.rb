@@ -29,6 +29,7 @@ class MintServer
   attr_accessor :mint_wallet
   attr_accessor :exchange
   attr_accessor :cipher
+  attr_accessor :decipher
   attr_accessor :logger
 
   def initialize
@@ -82,20 +83,32 @@ class MintServer
       #@mint_wallet.debit_coin(coin)
       #@mint_wallet.reload
       #@mint_wallet.check_balance
+      @logger.debug "Awaiting wallet identification data from client"
+      unparsed_data = @client.gets
+      @logger.debug "attempting to parse data"
+      @logger.debug unparsed_data
+      params = JSON.parse(unparsed_data)
+      deciphered_wallet_address = @decipher.decrypt_with_cipher(Base64.decode64(params["receiver_wallet_address"]))
+      deciphered_wallet_balance = @decipher.decrypt_with_cipher(Base64.decode64(params["receiver_wallet_balance"]))
+      @logger.debug "walletid for receiver is " + deciphered_wallet_address
+      @logger.debug "wallet balance for receiver is " + deciphered_wallet_balance
       arandom_secret = (0...16).map { (65 + rand(26)).chr }.join
       signature = @mint_wallet.crypto_card.sign( arandom_secret )
       verified = @mint_wallet.crypto_card.verify(signature, arandom_secret)
 
-      data = {"wallet_identification" => @mint_wallet.wallet_identification.to_s, "coin_serial_number" => coin.serial_number, "coin_face_value" => coin.face_value.to_s } 
+      #data = {"wallet_identification" => @mint_wallet.wallet_identification.to_s, "coin_serial_number" => coin.serial_number, "coin_face_value" => coin.face_value.to_s } 
+      bank_wallet = DigitalWallet.where(:wallet_identification => deciphered_wallet_address).first
+      @logger.debug( 'Bank Wallet is ' )
+      @logger.debug bank_wallet.inspect
       block = @blockchain.add_block(
             :sender_wallet_address => @mint_wallet.wallet_identification,
             :sender_wallet_balance => @mint_wallet.balance,
-            :receiver_wallet_address => @bank_wallet.wallet_identification,
-            :receiver_wallet_balance => @bank_wallet.balance,
+            :receiver_wallet_address => deciphered_wallet_address, #@bank_wallet.wallet_identification,
+            :receiver_wallet_balance => deciphered_wallet_balance, #@bank_wallet.balance,
             :sender_public_key => Base64.encode64(@mint_wallet.crypto_card.public_key.to_s),
             :transaction_amount => 1,
             :sender_signature => Base64.encode64(signature),
-            :verifiable_data => random_secret)
+            :verifiable_data => arandom_secret)
       @logger.debug "Inspecting block"
       @logger.debug block.inspect
       block.save
@@ -122,13 +135,15 @@ class MintServer
     #ticketdevilbank_crypto = TicketDevilCryptography.new(TicketDevilCryptography::CONFIG)
 
     @cipher = TicketDevilCipher.new
+    @decipher = TicketDevilCipher.new
     @cipher.setup_cipher()
+    @decipher.setup_decipher(@cipher.cipher_key, @cipher.cipher_iv)
 
     random_secret = @cipher.cipher_key #(0...16).map { (65 + rand(26)).chr }.join
     @logger.debug("random secret is " + random_secret.to_s)
 
     @client = @server.accept
-    params = JSON.parse(client.gets)
+    params = JSON.parse(@client.gets)
     if not params["public_key"].nil?
       @logger.debug("the public key from the client is ")
       @logger.debug( params["public_key"] )
