@@ -25,6 +25,10 @@ class Block
   field :sender_signature
   field :verifiable_data
 
+  index({ sender_wallet_address: 1}, { unique: false })
+  index({ receiver_wallet_address: 1}, { unique: false })
+
+
   before_create :pre_init
   before_create :add_merkle_leaf
 
@@ -96,8 +100,22 @@ class Blockchain
           :sender_signature => params[:sender_signature],
           :verifiable_data => params[:verifiable_data])
     #self.blocks << block
+    block.receiver_wallet_balance = block.receiver_wallet_balance.to_f + block.transaction_amount.to_f
     block.save
     return block
+  end
+
+  def balance_for_address(address)
+    total = 0
+    blocks = Block.where(:blockchain_id => self.id, :receiver_wallet_address => address).order(:created_at => :asc)
+    for block in blocks
+      total = total + block.transaction_amount.to_f
+      if block.receiver_wallet_balance != total
+        block.receiver_wallet_balance = total
+        block.save
+      end
+    end
+    return total
   end
 
   private

@@ -95,6 +95,7 @@ class MintClientBank
       #mint_wallet = DigitalWallet.where(:wallet_identification => data["wallet_identification"]).first
       #@logger.debug mint_wallet.inspect
       #CentralizedExchange.transfer(mint_wallet, @bank_wallet, data["coin_serial_number"], data["coin_face_value"])
+      @bank_wallet.update_to_chain_balance(Blockchain.first)
       cipher_done = true
     end
     @bank_client.close

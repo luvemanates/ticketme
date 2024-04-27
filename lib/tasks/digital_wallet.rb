@@ -65,6 +65,11 @@ class DigitalWallet
     @crypto_card.save
   end
 
+  def update_to_chain_balance(blockchain)
+    self.balance = blockchain.balance_for_address(self.wallet_identification)
+    self.save
+  end
+
   #need to ensure we are not trying to debit the same coin twice
   def debit_coin(coin)
     ledger_entry_block = LedgerEntryBlock.new(:ledger_entry_type => LedgerEntryBlock::DEBIT, :coin_serial_number => coin.serial_number, :coin_face_value => coin.face_value)
