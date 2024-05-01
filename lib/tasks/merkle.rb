@@ -28,26 +28,29 @@ class MerkleTree
         return leaf_inserted
       when MerkleTreeNode::PARENT
         leaf_inserted = insert_for_parent(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
+        return leaf_inserted
       when MerkleTreeNode::ROOT
         leaf_inserted = insert_for_root(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
+        return leaf_inserted
     end
   end
 
 
-  #can't rely on current_height if there needs to be a new root
   def traverse_tree(subtree = nil, new_leaf = nil, leaf_height, current_height, leaf_inserted )
     return if subtree.nil?
     return if subtree.fulfilled and leaf_inserted
     #visit current_node
-    leaf_inserted = visit(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
+    leaf_inserted = visit(subtree, new_leaf, leaf_height, current_height, leaf_inserted )
     return if subtree.children.nil?
     #puts subtree.inspect
     nsubtree_left  = subtree.children.first
     nsubtree_right = subtree.children.last
-    unless nsubtree_left.fulfilled
+    unless nsubtree_left.fulfilled or nsubtree_left.nil?
+      #@logger.debug 'traverse_tree( current_root, new_leaf, leaf_height=' + leaf_height.to_s + ', current_height=' + (current_height + 1).to_s + ', leaf_inserted=' + leaf_inserted.to_s + ')'
       traverse_tree( nsubtree_left, new_leaf, leaf_height, current_height + 1, leaf_inserted )
     end
-    unless nsubtree_right.fulfilled
+    unless nsubtree_right.fulfilled or nsubtree_right.nil?
+      #@logger.debug 'traverse_tree( current_root, new_leaf, leaf_height=' + leaf_height.to_s + ', current_height=' + (current_height + 1).to_s + ', leaf_inserted=' + leaf_inserted.to_s + ')'
       traverse_tree( nsubtree_right, new_leaf, leaf_height, current_height + 1, leaf_inserted )
     end
   end
@@ -63,12 +66,16 @@ class MerkleTree
         old_root.node_type = "PARENT"
         old_root.parent = new_root
         old_root.save
+        return leaf_inserted
       end
+      #otherwise its just filled so just return
+      return leaf_inserted
     elsif subtree.children.size == 1
       #if one leave or one parents
       if subtree.children.first.node_type == "PARENT"
         new_node = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "PARENT", :parent_id => subtree.id)
         new_node.save
+        return leaf_inserted
       elsif subtree.children.first.node_type == "LEAF"
         new_leaf.parent = subtree
         new_leaf.save
@@ -77,11 +84,18 @@ class MerkleTree
       end
     elsif subtree.children.size == 0
       #if no leaf or parents at root
-      #insert a leaf.
-      new_leaf.parent = subtree
-      new_leaf.save
-      leaf_inserted = true
-      return leaf_inserted
+      #insert a leaf. if at the right height
+      if leaf_height == (current_height + 1)
+        new_leaf.parent = subtree
+        new_leaf.save
+        leaf_inserted = true
+        return leaf_inserted
+      else
+        #insert parent
+        new_node = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "PARENT", :parent_id => subtree.id)
+        new_node.save
+        return leaf_inserted
+      end
     end
   end
 
@@ -98,11 +112,11 @@ class MerkleTree
         new_leaf.save
         leaf_inserted = true
         return leaf_inserted
-      end
-      if subtree.children.first.node_type == "PARENT"
+      elsif subtree.children.first.node_type == "PARENT"
         return if leaf_height == (current_height + 1)
         new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "PARENT", :parent_id => subtree.id)
         new_parent.save
+        return leaf_inserted
       end
     elsif subtree.children.size == 0
       #if no leaves or parents
@@ -112,10 +126,10 @@ class MerkleTree
         new_leaf.save
         leaf_inserted = true
         return leaf_inserted
-      elsif current_height < leaf_height 
+      else #
         new_parent = MerkleTreeNode.new(:merkle_tree_id => self.id, :node_type => "PARENT", :parent_id => subtree.id)
         new_parent.save
-        leaf_inserted = true
+        #leaf_inserted = true
         return leaf_inserted
       end
     end
@@ -147,6 +161,8 @@ class MerkleTree
     #recently_added_leaves = MerkleTreeNode.where(:node_type => 'leaf').order(:created_at => :desc).limit(2) 
     new_leaf = MerkleTreeNode.new(:merkle_tree_id => self.id, :block_id => params[:block_id], :node_type => MerkleTreeNode::LEAF, :stored_data => params[:stored_data])
 
+    recently_added_leaf = MerkleTreeNode.where(:node_type => MerkleTreeNode::LEAF, :merkle_tree_id => self.id).order(:created_at => :desc).first 
+
     #case 1 - no nodes
     if self.merkle_tree_nodes.empty?
       new_root = MerkleTreeNode.new(:node_type => MerkleTreeNode::ROOT, :merkle_tree_id => self.id)
@@ -155,10 +171,8 @@ class MerkleTree
       new_leaf.parent = new_root
       new_leaf.save
       insert_done = true
-    end
     #case 2 recently added has space available -- easiest insert case
-    recently_added_leaf = MerkleTreeNode.where(:node_type => MerkleTreeNode::LEAF, :merkle_tree_id => self.id).order(:created_at => :desc).first 
-    if recently_added_leaf
+    elsif recently_added_leaf
       if recently_added_leaf.parent.children.size == 1
         new_leaf.parent = recently_added_leaf.parent
         new_leaf.save
@@ -167,8 +181,14 @@ class MerkleTree
       end
     end
     if not insert_done
-      current_root = MerkleTreeNode.where(:merkle_tree => self, :node_type => MerkleTreeNode::ROOT).first
-      traverse_tree(current_root, new_leaf, get_leaf_height(), 1, false)
+      current_root = MerkleTreeNode.where(:merkle_tree_id => self.id, :node_type => MerkleTreeNode::ROOT).first
+      leaf_height = get_leaf_height()
+      if current_root.fulfilled
+        leaf_height = leaf_height + 1   #creating a new root will move all leafs up by one
+      end
+      #@logger.debug 'calling traverse tree'
+      #@logger.debug 'traverse_tree( current_root, new_leaf, leaf_height=' + leaf_height.to_s + ', current_height=1, leaf_inserted=false)'
+      traverse_tree(current_root, new_leaf, leaf_height, 1, false)
       #new_leaf.save
       update_digests_for_recent_leaf(new_leaf)
     end
