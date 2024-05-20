@@ -22,7 +22,7 @@ class MerkleTree
   end
 
   def visit(subtree, new_leaf, leaf_height, current_height, leaf_inserted)
-    return if subtree.fulfilled and leaf_inserted #this line is finished
+    return if subtree.fulfilled or leaf_inserted #this line is finished
     case subtree.node_type
       when MerkleTreeNode::LEAF
         return leaf_inserted
@@ -38,7 +38,7 @@ class MerkleTree
 
   def traverse_tree(subtree = nil, new_leaf = nil, leaf_height, current_height, leaf_inserted )
     return if subtree.nil?
-    return if subtree.fulfilled and leaf_inserted
+    return if subtree.fulfilled or leaf_inserted
     #visit current_node
     leaf_inserted = visit(subtree, new_leaf, leaf_height, current_height, leaf_inserted )
     return if subtree.children.nil?
