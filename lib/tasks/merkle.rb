@@ -200,6 +200,7 @@ class MerkleTree
         current_root.node_type = "PARENT"
         current_root.parent = new_root
         self.root_node_id = new_root.id
+        current_root.save
         new_root.save #pull in the hash
         current_root = new_root
       end
