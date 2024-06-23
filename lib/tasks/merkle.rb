@@ -266,7 +266,11 @@ class MerkleTreeNode
           dec_fc = Base64.decode64(children.last.merkle_hash.to_s) 
           dec_sc = Base64.decode64(children.first.merkle_hash.to_s)
           self.merkle_hash = Base64.encode64(Digest::SHA256.digest(dec_fc + " " + dec_sc))
-          self.fulfilled = true
+          if (children.last.fulfilled and children.first.fulfilled) and (children.first != children.last)
+            self.fulfilled = true
+          else
+            self.fulfilled = false
+          end
         elsif children.size == 1
           unless children.first.merkle_hash.nil?
             dec_fc = Base64.decode64(children.first.merkle_hash) 
